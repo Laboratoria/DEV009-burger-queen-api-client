@@ -1,0 +1,12 @@
+
+.burger{
+  color: red;
+}
+
+.backgroundNavbar{
+  background-image: url("./assets/bugerbanner.avif");
+  min-height: 130px;
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+  background-position: center;
+}
