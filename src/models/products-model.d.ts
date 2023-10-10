@@ -4,5 +4,6 @@ export type Products = {
 };
 
 export type formLogIn = {
-    email: string | number; 
+    setEmail: string;
+    setPassword: string;
 }
