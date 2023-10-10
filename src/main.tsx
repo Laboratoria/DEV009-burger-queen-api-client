@@ -1,4 +1,4 @@
-
+import './index.css';
 import AppRoutes from "./Route/routes";
 import { createRoot } from 'react-dom/client';
 
