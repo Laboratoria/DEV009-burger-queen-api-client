@@ -3,6 +3,9 @@ import React from "react";
 interface UserProfileProps {
   profileType: "waiter" | "administrator" | "cook";
   waiterName: string;
+  administratorName:string;
+  cookName: string;
+
   onLogoutClick: () => void;
   onBackClick: () => void;
 }
