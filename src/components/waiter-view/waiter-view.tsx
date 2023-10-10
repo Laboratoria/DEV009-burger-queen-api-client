@@ -14,6 +14,7 @@ const  WaiterView = () => {
     }, [])
 
     return (<>
+    
         <div><ProductList editable={false} products={products} /></div>
         <div>Creating order: 
             <OrderForm client={client} />
