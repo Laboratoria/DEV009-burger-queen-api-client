@@ -9,18 +9,30 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (e: { preventDefault: () => void; }) => { //envia el formulario
-    e.preventDefault(); //detiene el comportamiento predeterminado del evento.
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); // Detiene el comportamiento predeterminado del evento.
+  
     try {
-      const data = await login(email, password)
-      console.log('Usuario autenticado como mesero');
-      navigate('/waiter-view'); // Redirige al mesero a la vista del mesero
-
+      const data = await login(email, password); // Intenta autenticar al usuario
+  
+      switch (data.role) {
+        case 'admin':
+          navigate('/admin-view'); // Redirige al usuario con rol de admin a la vista de administrador
+          break;
+        case 'waiter':
+          navigate('/waiter-view'); // Redirige al usuario con rol de mesero a la vista de mesero
+          break;
+        case 'chef':
+          navigate('/chef-view'); // Redirige al usuario con rol de chef a la vista de chef
+          break;
+        default:
+          console.error('Rol desconocido:', data.role); // Imprime un mensaje de error si el rol es desconocido
+      }
     } catch (error) {
-      console.error(error);
-
+      console.error(error); // Maneja los errores, si los hay
     }
   };
+  
 
   return (
     <form onSubmit={handleFormSubmit} id="logInBody">
