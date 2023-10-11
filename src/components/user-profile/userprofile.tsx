@@ -5,8 +5,10 @@ interface UserProfileProps {
   waiterName: string;
   administratorName:string;
   cookName: string;
+  
 
   onLogoutClick: () => void;
+  
   onBackClick: () => void;
 }
 
@@ -33,7 +35,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="user-profile">
       <div className="left">
-        <img src="hereweputthelogoorjusttheletters.png" alt="Logo" />
+      <img src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
       </div>
       <div className="center">
         <h2>{getWelcomeText()}</h2>
