@@ -1,0 +1,39 @@
+.user-profile {
+    border: 2px solid #FFA9AA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+  }
+  
+  .left {
+    border: 2px solid #FFA9AA;
+    padding: 5px;
+  }
+  
+  .left img {
+    width: 100px;
+    height: 42px;
+    border: 2px solid #FFA9AA;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  .center h2 {
+    color: #00578D;
+  }
+  
+  .right {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .right button {
+    border: 2px solid #FFA9AA;
+    padding: 5px 10px;
+    background-color: #fff;
+  }
+  

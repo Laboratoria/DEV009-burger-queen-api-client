@@ -1,4 +1,5 @@
 import React from "react";
+import "./user-profile.css";
 
 interface UserProfileProps {
   profileType: "waiter" | "administrator" | "cook";

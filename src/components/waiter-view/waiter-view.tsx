@@ -22,21 +22,19 @@ const WaiterView = () => {
                 setProducts(response);
             })
     }, [])
-
-  }, [])
   const handleBackClick = () => {
     navigate(-1);
   };
   const handleLogoutClick = () => {
     setAuthenticated(false);
-    history.push("/login");
+    navigate("/login");
   };
 
   return (
     <>
       <UserProfile
         profileType="waiter"
-        waiterName="waiter1"
+        waiterName=""
         onBackClick={handleBackClick}
         onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
       <div>
