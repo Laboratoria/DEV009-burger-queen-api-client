@@ -26,34 +26,33 @@
 
 
 
-#loginButton {
-  width: 100px;
-  height: 40px;
-  background-color: #f6b7b7ec;
-  color: rgb(255, 255, 255);
-  border: 3px solid  #326e99;
-  border-radius: 5px;
-  font-family: "Lucida Console", Courier, monospace;
-  position: absolute;
-  bottom: 290px; /* Distancia desde la parte inferior del cuadro */
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: bold;/*letra más grusa*/
-  font-style: oblique; /* Agrega un estilo cursivo */
-}
+  #loginButton {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background-color:#f9d0d0ec;
+    color: rgb(255, 255, 255);
+    border:3px solid #2e4789;
+    border-radius: 5px;
+    font-family: "Lucida Console", Courier, monospace;
+    margin-left: 300px;
+    margin-top: 200px;
+  }
 
-#emailbox::placeholder, #passwordbox::placeholder {
-  font-weight: bold;
-  font-style: oblique; /* Agrega un estilo cursivo */
-  color: #326e99; /* Cambia el color del placeholder */
-}
+  #emailbox{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    margin-left: 34px;
+    margin-top: 40px;
+  }
 
+  #passwordbox{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    margin-left: 34px;
+    margin-top: 90px;
+  }
 
-.logo {
-  width: 400px; /* Tamaño de la imagen */
-  height: 100px;
-  display: block; /* Hace que la imagen sea un bloque */
-  margin: auto; /* Centra horizontalmente */
-  margin-top: 150px;
-}
 
