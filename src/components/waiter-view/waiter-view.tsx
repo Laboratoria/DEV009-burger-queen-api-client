@@ -8,9 +8,13 @@ const  WaiterView = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() =>{
-        fetch("http://localhost:8080/products")
+        fetch("http://localhost:8080/products", {  headers: {
+            "Content-Type": "application/json",
+            authorization:"Bearer "+localStorage.getItem("accessToken")
+          },} )
+          .then (response=> response.json())
             .then((response) => {
-                setProducts(response.products);
+                setProducts(response);
             })
     }, [])
 
