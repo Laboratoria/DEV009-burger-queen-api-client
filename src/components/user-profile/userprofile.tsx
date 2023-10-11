@@ -10,7 +10,7 @@ interface UserProfileProps {
 
   onLogoutClick: () => void;
   
-  onBackClick: () => void;
+  onBackClick?: () => void;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
