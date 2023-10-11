@@ -12,12 +12,17 @@ const WaiterView = () => {
   const navigate = useNavigate();
   const [, setAuthenticated] = useState(false);
 
+    useEffect(() =>{
+        fetch("http://localhost:8080/products", {  headers: {
+            "Content-Type": "application/json",
+            authorization:"Bearer "+localStorage.getItem("accessToken")
+          },} )
+          .then (response=> response.json())
+            .then((response) => {
+                setProducts(response);
+            })
+    }, [])
 
-  useEffect(() => {
-    fetch("http://localhost:8080/products")
-      .then((response) => {
-        setProducts(response.products);
-      })
   }, [])
   const handleBackClick = () => {
     navigate(-1);

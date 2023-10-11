@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../../index.css';
+import { login } from "../../services/tokenRepository";
 
 
 const LoginForm = () => {
@@ -9,34 +11,21 @@ const LoginForm = () => {
 
   const handleFormSubmit = async (e: { preventDefault: () => void; }) => { //envia el formulario
     e.preventDefault(); //detiene el comportamiento predeterminado del evento.
-
-    const response = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const accessToken = data.accessToken;
-      //donde se esta guardando
-      localStorage.setItem("accessToken", accessToken);
-
+    try {
+      const data = await login(email, password)
       console.log('Usuario autenticado como mesero');
       navigate('/waiter-view'); // Redirige al mesero a la vista del mesero
-    } else {
-      console.log('Credenciales incorrectas');
+
+    } catch (error) {
+      console.error(error);
+
     }
   };
 
   return (
     <form onSubmit={handleFormSubmit} id="logInBody">
-       <img src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
+      <div id= "cuadrito">
+      <img src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
       <input
         id="emailbox"
         type="text"
@@ -51,7 +40,8 @@ const LoginForm = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Contraseña"
       />
-      <button type="submit" id="loginButton">Iniciar Sesión</button>
+      <button type="submit" id="loginButton">LOGIN</button>
+      </div>
     </form>
   );
 };
