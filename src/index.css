@@ -1,44 +1,59 @@
-img{
-  position: fixed;
-  margin-top: 1px;
-  width: 200px;
-  
+#logInBody {
+  text-align: center; /* Centra el contenido dentro del formulario */
 }
 
 #cuadrito {
-  position: absolute;
-  background-color: #f9d0d0ec;
-  width: 20px;
-  height: 50px;
+  background-color: #ffd3d3ec; /* Establece el color rosado */
+  padding: 30px; /* Agrega un espacio alrededor del contenido */
+  border-radius: 10px; /* Añade esquinas redondeadas */
+  width: 350px; /* Ajusta el ancho según sea necesario */
+  height: 150px;
+  margin: 0 auto; /* Centra el cuadrito en la página */
+  border:3px solid  #326e99;
+  margin-top: 1px;
 }
 
-  #loginButton {
-    position: absolute;
-    width: 100px;
-    height: 40px;
-    background-color:#f9d0d0ec;
-    color: rgb(255, 255, 255);
-    border:3px solid #2e4789;
-    border-radius: 5px;
-    font-family: "Lucida Console", Courier, monospace;
-    margin-left: 300px;
-    margin-top: 200px;
-  }
 
-  #emailbox{
-    position: absolute;
-    width: 100px;
-    height: 40px;
-    margin-left: 34px;
-    margin-top: 40px;
-  }
+#emailbox, #passwordbox {
+  border:3px solid #f0b7b7ec;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px; /* Ocupa todo el ancho del cuadrito */
+  text-align: center;
+  font-family: "Lucida Console", Courier, monospace;
+  margin-bottom: 10px; /* Agrega espacio entre los elementos */
+}
 
-  #passwordbox{
-    position: absolute;
-    width: 100px;
-    height: 40px;
-    margin-left: 34px;
-    margin-top: 90px;
-  }
 
- 
+
+#loginButton {
+  width: 100px;
+  height: 40px;
+  background-color: #f6b7b7ec;
+  color: rgb(255, 255, 255);
+  border: 3px solid  #326e99;
+  border-radius: 5px;
+  font-family: "Lucida Console", Courier, monospace;
+  position: absolute;
+  bottom: 290px; /* Distancia desde la parte inferior del cuadro */
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;/*letra más grusa*/
+  font-style: oblique; /* Agrega un estilo cursivo */
+}
+
+#emailbox::placeholder, #passwordbox::placeholder {
+  font-weight: bold;
+  font-style: oblique; /* Agrega un estilo cursivo */
+  color: #326e99; /* Cambia el color del placeholder */
+}
+
+
+.logo {
+  width: 400px; /* Tamaño de la imagen */
+  height: 100px;
+  display: block; /* Hace que la imagen sea un bloque */
+  margin: auto; /* Centra horizontalmente */
+  margin-top: 150px;
+}
+

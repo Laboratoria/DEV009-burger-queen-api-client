@@ -24,21 +24,21 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit} id="logInBody">
+       <img className="logo" src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
       <div id= "cuadrito">
-      <img src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
       <input
         id="emailbox"
         type="text"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder="ENTER EMAIL"
       />
       <input
         id="passwordbox"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
+        placeholder="ENTER PASSWORD"
       />
       <button type="submit" id="loginButton">LOGIN</button>
       </div>
