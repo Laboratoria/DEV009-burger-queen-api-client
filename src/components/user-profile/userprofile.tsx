@@ -10,7 +10,7 @@ interface UserProfileProps {
 
   onLogoutClick: () => void;
   
-  onBackClick: () => void;
+  onBackClick?: () => void;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -36,7 +36,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="user-profile">
       <div className="left">
-      <img src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
+      <img src="../img2/BURGER QUEEN.jpg" alt="Logo" />
       </div>
       <div className="center">
         <h2>{getWelcomeText()}</h2>

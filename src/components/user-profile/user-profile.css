@@ -1,5 +1,5 @@
 .user-profile {
-    border: 2px solid #FFA9AA;
+    border: 4px solid #FFA9AA;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -7,19 +7,15 @@
     background-color: #fff;
   }
   
-  .left {
-    border: 2px solid #FFA9AA;
-    padding: 5px;
-  }
-  
   .left img {
-    width: 100px;
-    height: 42px;
-    border: 2px solid #FFA9AA;
+    width: 150px;
+    height: 70px;
+    /* border: 2px solid #FFA9AA; */
   }
   
   .center {
     text-align: center;
+    font-size: 25px ;
   }
   
   .center h2 {
@@ -33,7 +29,7 @@
   
   .right button {
     border: 2px solid #FFA9AA;
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
     background-color: #fff;
   }
   

@@ -1,13 +1,15 @@
+import  "./main-menu-buttons.css"
+
 import { Link } from "react-router-dom";
 
 const MainMenuButtons = () => {
   return (
-    <div>
+    <div className="main-menu-buttons-container">
       <Link to="/menu">
-        <button>Menu</button>
+        <button className="menu-button">Menu</button>
       </Link>
-      <Link to="/order-ready">
-        <button>Order Ready</button>
+      <Link to="/order-ready-view">
+        <button className="order-ready-button">Order Ready</button>
       </Link>
     </div>
   );
