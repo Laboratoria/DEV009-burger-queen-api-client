@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import OrderForm from "../order-form/order-form";
 import ProductList from "../product-list/product-list";
 import UserProfile from "../user-profile/userprofile";
+import  "./menu.css"
 
 const Menu = ({ }) => {
       const [client, setClient] = useState("Kvn");
@@ -36,6 +37,11 @@ const Menu = ({ }) => {
             waiterName=""
             onBackClick={handleBackClick}
             onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
+         <div className="menu-container">
+         <div className="food-buttons-container">
+        <button className="breakfast">Breakfast</button>
+        <button className="lunch">Lunch</button>
+        </div>
           <div>
             <ProductList editable={false} products={products} />
           </div>
@@ -43,6 +49,8 @@ const Menu = ({ }) => {
             Creating order:
             <OrderForm client={client} />
           </div>
+          </div>
+          
         </>
       );
     };

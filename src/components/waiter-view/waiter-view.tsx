@@ -15,13 +15,15 @@ const WaiterView = () => {
 
   return (
     <>
-      <UserProfile
-        profileType="waiter"
-        waiterName=""
-        onBackClick={() => {}}
-        onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
-      <div>
-        <MainMenuButtons />
+      <div className="waiter-view">
+        <UserProfile
+          profileType="waiter"
+          waiterName=""
+          onBackClick={() => { }}
+          onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
+        <div>
+          <MainMenuButtons />
+        </div>
       </div>
     </>
   );
