@@ -25,6 +25,3 @@ export const login = async (email: string, password: string) => {
     throw new Error("Ha ocurrido un error en la petición");
   }
 };
-
-
-

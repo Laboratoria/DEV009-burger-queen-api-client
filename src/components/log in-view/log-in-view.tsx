@@ -34,7 +34,13 @@ const LoginForm = () => {
           console.log(`Rol desconocido: ${userRole}`);
       }
     } catch (error) {
-      console.error(error);
+      if (typeof error === 'string' && error.includes("Invalid email")) {
+        alert("El correo es incorrecto");
+      } else if (typeof error === 'string' && error.includes("Invalid password")) {
+        alert("La contraseña es incorrecta");
+      } else {
+        alert("Invalid email or password, please check your credentials.");
+      }
     }
   };
 
