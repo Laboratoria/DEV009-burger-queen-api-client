@@ -12,6 +12,8 @@ const Menu = ({ }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [, setAuthenticated] = useState(false);
+  const [selectedProductType, setSelectedProductType] = useState<"Breakfast" | "Lunch">("Breakfast");
+
 
   useEffect(() => {
     fetch("http://localhost:8080/products", {
@@ -39,6 +41,14 @@ const Menu = ({ }) => {
     navigate("/");
   };
   const [productType, setProductType] = useState("Breakfast");
+  const handleProductSelect = (product) => {
+    setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
+
+    setSelectedProductCounts((prevCounts) => ({
+        ...prevCounts,
+        [product.id]: (prevCounts[product.id] || 0) + 1,
+    }));
+};
 
   return (
     <>
@@ -49,15 +59,19 @@ const Menu = ({ }) => {
         onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
       <div className="menu-container">
         <div className="food-buttons-container">
-          <button className="breakfast" onClick={() => setProductType("Breakfast")}>Breakfast</button>
-          <button className="lunch" onClick={() => setProductType("Lunch")}>Lunch</button>
+          <button className="breakfast" onClick={() => setSelectedProductType("Breakfast")}>
+            Breakfast
+          </button>
+          <button className="lunch" onClick={() => setSelectedProductType("Lunch")}>
+            Lunch
+          </button>
         </div>
         <div className="productsSelection">
-        <ProductTable products={products.filter(product => product.type === productType)} />
+          <ProductTable products={products.filter(product => product.type === productType)} />
         </div>
         <div>
           Creating order:
-          <OrderForm client={client} />
+          <OrderForm client={client} products={products} />
         </div>
       </div>
 
