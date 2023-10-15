@@ -1,16 +1,19 @@
 import { Products } from "../../models/products-model.d";
 
 
-const  ProductList = ({products}: { products: Products[]}) => {
-    return (<>
-    <ul>
+const ProductList = ({ products }: { products: Products[] }) => {
+  if (!Array.isArray(products) || products.length === 0) {
+    return <p>No products available.</p>;
+  }
+  
+    return (
+      <ul>
         Choose one:
         {
-            products.map((p) => (<li>{p.name}</li>))
+        products.map((product, index) => ( <li key={index}>{product.name}</li>))
         }
-    </ul>
-    <div></div>
-    </>);
-};
-
-export default ProductList;
+      </ul>
+    );
+  };
+  
+  export default ProductList;
