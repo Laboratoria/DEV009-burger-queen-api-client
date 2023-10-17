@@ -1,9 +1,35 @@
 .custom-table {
+    max-width: 100%;
+    overflow-x: auto;
     border: 5px solid #FFA9AA;
-    background-color: #00578D;
     color: #FFA9AA;
+    font-family: "Lucida Console", Courier, monospace;
+    font-style: italic;
+    font-weight: bold;
     margin-top: 4em;
     width: 15em;
 }
+
+.custom-table th,
+.custom-table td {
+    background-color: #00578D;
+    color: #FFA9AA;
+    border: 2px solid #FFA9AA;
+}
+
+.custom-table th {
+    background-color: #00578D;
+    color: #FFA9AA;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.product-image {
+    max-width: 70px; /* Tamaño máximo deseado para el ancho */
+    max-height: 50px; /* Tamaño máximo deseado para la altura */
+    object-fit: cover; /* La imagen cubrirá el contenedor manteniendo la relación de aspecto */
+    display: block;
+    margin: auto; /* Esto centra la imagen tanto horizontal como verticalmente */
+  }
   
   
