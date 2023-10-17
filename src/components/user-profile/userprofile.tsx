@@ -1,15 +1,14 @@
 import React from "react";
 import "./user-profile.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface UserProfileProps {
   profileType: "waiter" | "administrator" | "cook";
   waiterName: string;
-  administratorName:string;
+  administratorName: string;
   cookName: string;
-  
-
   onLogoutClick: () => void;
-  
   onBackClick?: () => void;
 }
 
@@ -21,7 +20,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
   onLogoutClick,
   onBackClick,
 }) => {
-  // This function changes the welcome " " depending on the credentials.
   const getWelcomeText = () => {
     switch (profileType) {
       case "administrator":
@@ -36,14 +34,18 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="user-profile">
       <div className="left">
-      <img src="../img2/BURGER QUEEN.jpg" alt="Logo" />
+        <img src="../img2/BURGER QUEEN.jpg" alt="Logo" />
       </div>
       <div className="center">
         <h2>{getWelcomeText()}</h2>
       </div>
       <div className="right">
-        <button onClick={onBackClick}>Back</button>
-        <button onClick={onLogoutClick}>Logout</button>
+        <button onClick={onBackClick}>
+          <FontAwesomeIcon icon={faArrowLeft} className="icon" />
+        </button>
+        <button onClick={onLogoutClick}>
+          <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
+        </button>
       </div>
     </div>
   );

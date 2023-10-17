@@ -6,10 +6,10 @@ const MainMenuButtons = () => {
   return (
     <div className="main-menu-buttons-container">
       <Link to="/menu">
-        <button className="menu-button">Menu</button>
+        <button className="menu-button">MENU</button>
       </Link>
       <Link to="/order-ready-view">
-        <button className="order-ready-button">Order Ready</button>
+        <button className="order-ready-button">ORDER READY</button>
       </Link>
     </div>
   );
