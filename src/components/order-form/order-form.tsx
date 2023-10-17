@@ -15,7 +15,7 @@ interface OrderFormProps {
 
   const OrderForm: React.FC<OrderFormProps> = ({ client, products, selectedProducts }) => {
     const handleRemoveProduct = (product: Product) => {
-        // Agrega aquí la lógica para eliminar el producto de los seleccionados
+        // falta lógica para eliminar 
     };
 
     const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0);
