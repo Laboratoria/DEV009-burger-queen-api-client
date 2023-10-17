@@ -12,46 +12,40 @@ interface Product {
 
 interface ProductTableProps {
   products: Product[];
+  selectedProducts?: Product[];
+  onProductSelect: (product: Product) => void;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
-  const breakfastProducts = products.filter((product) => product.type === 'Breakfast');
-  const lunchProducts = products.filter((product) => product.type === 'Lunch');
+const ProductTable: React.FC<ProductTableProps> = ({ products, selectedProducts, onProductSelect  }) => {
+  const handleProductSelect = (product: Product) => {
+    onProductSelect(product);
+};
 
   return (
     <div>
-      <table className="table custom-table">
-        <tbody>
-          {breakfastProducts.map((product, index) => (
-            <tr key={index}>
-              <td>{product.name}</td>
-              <td>
-                <img
-                  className="product-image" // Nueva clase para las imágenes
-                  src={product.image}
-                  alt={product.name}
-                />
-              </td>
-              <td>${product.price}</td>
-            </tr>
-          ))}
-          {lunchProducts.map((product, index) => (
-            <tr key={index}>
-              <td>{product.name}</td>
-              <td>
-                <img
-                  className="product-image" // Nueva clase para las imágenes
-                  src={product.image}
-                  alt={product.name}
-                />
-              </td>
-              <td>${product.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <table className="table custom-table">
+            <thead>
+            </thead>
+            <tbody>
+                {products.map((product, index) => (
+                    <tr key={index}>
+                        <td>{product.name}</td>
+                        <td>
+                          <img className='product-image'
+                          src={product.image}
+                          alt={product.name}
+                          />
+                        </td>
+                        <td>${product.price}</td>
+                        <td>
+                            <button onClick={() => handleProductSelect(product)}>Select</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     </div>
-  );
+);
 };
 
 export default ProductTable;

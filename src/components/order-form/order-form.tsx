@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    type: string;
-}
+// interface Product {
+//     id: number;
+//     name: string;
+//     price: number;
+//     type: string;
+// }
 
-const OrderForm = ({ client, products }: { client: string; products: Product[] }) => {
-    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+interface OrderFormProps {
+    client: string;
+    products: Product[];
+    selectedProducts: Product[];
+  }
 
-    const handleProductSelect = (product: Product) => {
-        setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
-    };
-
+  const OrderForm: React.FC<OrderFormProps> = ({ client, products, selectedProducts }) => {
     const handleRemoveProduct = (product: Product) => {
-        setSelectedProducts((prevSelectedProducts) => prevSelectedProducts.filter((p) => p.id !== product.id));
+        // Agrega aquí la lógica para eliminar el producto de los seleccionados
     };
 
     const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0);
+
 
     return (
         <>
@@ -28,14 +29,26 @@ const OrderForm = ({ client, products }: { client: string; products: Product[] }
                 <input type="number" id="table" />
 
                 <h3>Selected Products:</h3>
-                <ul>
-                    {selectedProducts.map((product) => (
-                        <li key={product.id}>
-                            {product.name} - ${product.price}{' '}
-                            <button onClick={() => handleRemoveProduct(product)}>Remove</button>
-                        </li>
-                    ))}
-                </ul>
+                <table className="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        {selectedProducts.map((product) => (
+                            <tr key={product.id}>
+                                <td>{product.name}</td>
+                                <td>${product.price}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={() => handleRemoveProduct(product)}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
                 <p>Total: ${orderTotal}</p>
             </form>
