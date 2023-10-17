@@ -1,0 +1,69 @@
+.formfororder {
+    font-family: "Lucida Console", Courier, monospace;
+    font-style: italic;
+    color: #FFA9AA; /* Rosa */
+  }
+  
+  .inputfororder {
+    border: 2px solid #00578D; /* Azul */
+    color: #00578D; /* Azul */
+    font-size: 16px; /* Tamaño de fuente */
+    padding: 5px;
+  }
+  
+  .choose {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+  }
+  
+  .choose th, .choose td {
+    border: 2px solid #FFA9AA; /* Rosa */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .choose th {
+    background-color: #00578D; /* Azul */
+    color: #FFA9AA; /* Rosa */
+    font-weight: bold;
+  }
+  
+  .choose td {
+    color: #00578D; /* Azul */
+  }
+  
+  .btn {
+    background-color: #00578D; /* Azul */
+    color: #FFA9AA; /* Rosa */
+    border: none;
+    padding: 10px 20px;
+    font-size: 24px; /* Tamaño de fuente */
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #FFA9AA; /* Rosa */
+    color: #00578D; /* Azul */
+    cursor: pointer;
+  }
+  
+  .total {
+    font-size: 20px; /* Tamaño de fuente */
+    font-weight: bold;
+    color: #00578D; /* Azul */
+  }
+  
+  .btn {
+    background-color: #00578D;
+    color: #FFA9AA;
+    border: none;
+    font-size: 24px; /* Tamaño del icono */
+  }
+  
+  .fa-times {
+    color: #ffffff; /* Azul */
+    background-color:#FFA9AA;
+    font-size: 35px;
+  }
+  

@@ -1,37 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './order-form.css'; // Asegúrate de tener un archivo CSS asociado
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-// interface Product {
-//     id: number;
-//     name: string;
-//     price: number;
-//     type: string;
-// }
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    type: string;
+}
 
 interface OrderFormProps {
     client: string;
     products: Product[];
     selectedProducts: Product[];
-  }
+    onRemoveProduct: (product: Product) => void; // Función para eliminar un producto seleccionado
+}
 
-  const OrderForm: React.FC<OrderFormProps> = ({ client, products, selectedProducts }) => {
+const OrderForm: React.FC<OrderFormProps> = ({ client, products, selectedProducts, onRemoveProduct }) => {
     const handleRemoveProduct = (product: Product) => {
-        // falta lógica para eliminar 
+        onRemoveProduct(product); // Llamada a la función prop proporcionada
     };
 
     const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0);
 
-
     return (
         <>
-            <form>
+            <form className="formfororder">
                 <h2>Your order for {client}</h2>
                 <label htmlFor="table">Table:</label>
-                <input type="number" id="table" />
+                <input type="number" id="table" className="inputfororder" />
 
                 <h3>Selected Products:</h3>
-                <table className="table">
-                    <thead>
-                    </thead>
+                <table className="choose">
+                    <thead></thead>
                     <tbody>
                         {selectedProducts.map((product) => (
                             <tr key={product.id}>
@@ -39,18 +41,19 @@ interface OrderFormProps {
                                 <td>${product.price}</td>
                                 <td>
                                     <button
-                                        className="btn btn-danger"
+                                        className="btn"
                                         onClick={() => handleRemoveProduct(product)}
                                     >
-                                        Remove
+                                        <i className="fa fa-times"></i>
                                     </button>
+
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
 
-                <p>Total: ${orderTotal}</p>
+                <p className="total">Total: ${orderTotal}</p>
             </form>
         </>
     );

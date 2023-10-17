@@ -25,11 +25,24 @@
 }
 
 .product-image {
-    max-width: 70px; /* Tamaño máximo deseado para el ancho */
-    max-height: 50px; /* Tamaño máximo deseado para la altura */
-    object-fit: cover; /* La imagen cubrirá el contenedor manteniendo la relación de aspecto */
+    max-width: 70px;
+    max-height: 50px;
+    object-fit: cover;
     display: block;
-    margin: auto; /* Esto centra la imagen tanto horizontal como verticalmente */
+    margin: auto;
+}
+
+.check-icon {
+    color:#fdfdfd;
+    font-size: 32px;
+    font-weight: bolder;
+    background-color:#00578D;
+}
+
+.select-button {
+    background-color:#00578D;
+    border: solid #FFA9AA;
   }
   
   
+
