@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
+import './order-form.css'; // Asegúrate de tener un archivo CSS asociado
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Product {
     id: number;
@@ -26,11 +30,12 @@ interface OrderFormProps {
 
     return (
         <>
-            <form>
+            <form className="formfororder">
                 <h2>Your order for {client}</h2>
                 <label htmlFor="table">Table:</label>
                 <select
                     id="table"
+                    className="inputfororder"
                     value={table}
                     onChange={(e) => setTable(e.target.value)}
                 >
@@ -42,9 +47,8 @@ interface OrderFormProps {
                 </select>
 
                 <h3>Selected Products:</h3>
-                <table className="table">
-                    <thead>
-                    </thead>
+                <table className="choose">
+                    <thead></thead>
                     <tbody>
                         {selectedProducts.map((product) => (
                             <tr key={product.id}>
@@ -55,8 +59,9 @@ interface OrderFormProps {
                                         className="btn btn-danger"
                                         onClick={() => onRemoveProduct(product)}
                                     >
-                                        Remove
+                                        <i className="fa fa-times"></i>
                                     </button>
+
                                 </td>
                                 {/* boton para mandar la orden a la vista del cocinero */}
                                 {/* <td>
@@ -72,7 +77,7 @@ interface OrderFormProps {
                     </tbody>
                 </table>
 
-                <p>Total: ${orderTotal}</p>
+                <p className="total">Total: ${orderTotal}</p>
             </form>
         </>
     );
