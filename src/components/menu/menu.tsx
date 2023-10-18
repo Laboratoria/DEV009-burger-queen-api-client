@@ -56,6 +56,10 @@ const Menu = () => {
     setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
   };
 
+  const handleRemoveProduct = (product: Product) => {
+    setSelectedProducts((prevSelectedProducts) => prevSelectedProducts.filter((p) => p.id !== product.id));
+  };
+
   return (
     <div className="outer-container">
       <div className="menu-view">
@@ -90,7 +94,7 @@ const Menu = () => {
         </div>
         <div>
           Creating order:
-          <OrderForm client={client} products={products} selectedProducts={selectedProducts} />
+          <OrderForm client={client} products={products} selectedProducts={selectedProducts} onRemoveProduct={handleRemoveProduct}  />
         </div>
       </div>
       </div>
