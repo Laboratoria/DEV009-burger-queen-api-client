@@ -1,4 +1,4 @@
-import  FormLogIn  from "./components/log in-view/log-in-view";
+import  FormLogIn  from "./components/login-view/log-in-view";
 
 const App = () => {
   return <FormLogIn />;

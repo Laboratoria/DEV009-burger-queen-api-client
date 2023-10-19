@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginForm from "../components/log in-view/log-in-view";
+import LoginForm from "../components/login-view/log-in-view";
 import WaiterView from "../components/waiter-view/waiter-view"; // Asegúrate de importar el componente correcto
 import Menu from "../components/menu/menu";
 import OrderReady from "../components/order-ready-view/order-ready-view";

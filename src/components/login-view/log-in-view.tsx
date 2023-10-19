@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../index.css";
+import './login.css';
 import { login } from "../../services/tokenRepository";
 
 const LoginForm = () => {
@@ -46,7 +46,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} id="logInBody">
+    <form onSubmit={handleFormSubmit} className="logInBody">
       <img className="logo" src="../img/f22f65b8-9001-4b5e-8721-bd87b5d636d2.jpg" alt="Logo" />
       <div id="cuadrito">
         <input

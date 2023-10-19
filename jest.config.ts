@@ -1,13 +1,15 @@
-// jest.config.ts
-
-export default {
+module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'jest-environment-jsdom',
     transform: {
         "^.+\\.tsx?$": "ts-jest" 
     // process `*.tsx` files with `ts-jest`
     },
+    transformIgnorePatterns: [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+    ],
     moduleNameMapper: {
-        '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
+      "^.+\\.module\\.css$": "identity-obj-proxy",
+      "^.+\\.(css|png|jpg|jpeg)$": "<rootDir>/src/tests/fileMock.js",
     },
-}
+  };
