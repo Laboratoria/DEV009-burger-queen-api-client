@@ -44,7 +44,7 @@ const Menu = () => {
   }, []);
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate("/waiter-view");
   };
 
   const handleLogoutClick = () => {

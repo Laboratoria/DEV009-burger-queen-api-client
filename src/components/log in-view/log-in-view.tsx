@@ -13,6 +13,7 @@ const LoginForm = () => {
 
     try {
       const data = await login(email, password);
+      console.log(data);
       const userRole = localStorage.getItem("userRole");
 
       console.log(`userRole from localStorage: ${userRole}`);
