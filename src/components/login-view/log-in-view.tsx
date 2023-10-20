@@ -25,7 +25,7 @@ const LoginForm = () => {
           break;
         case 'admin':
           console.log('Usuario autenticado como administrador');
-          navigate('/admin-view');
+          navigate('/admi-view');
           break;
         case 'chef':
           console.log('Usuario autenticado como chef');
