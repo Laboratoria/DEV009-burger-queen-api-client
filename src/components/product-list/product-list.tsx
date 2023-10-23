@@ -10,7 +10,7 @@ const ProductList = ({ products }: { products: Products[] }) => {
       <ul>
         Choose one:
         {
-        products.map((product, index) => ( <li key={index}>{product.name}</li>))
+        products.map((product, index) => ( <li key={index}>{product.name}</li>)) //renderiza una lista de productos (index = desde el inicio)
         }
       </ul>
     );

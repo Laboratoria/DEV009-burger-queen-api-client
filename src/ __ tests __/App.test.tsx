@@ -9,6 +9,6 @@ test('demo', () => {
 })
 
 test("Renders the main page", () => {
-    render(<App />)
+    render(<App/>)
     expect(true).toBeTruthy()
 })

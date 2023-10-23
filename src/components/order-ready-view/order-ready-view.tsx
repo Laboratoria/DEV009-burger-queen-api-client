@@ -10,7 +10,7 @@ const OrderReady = () => {
   const [, setAuthenticated] = useState(false);
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate("/waiter-view");
   };
   const handleLogoutClick = () => {
     setAuthenticated(false);

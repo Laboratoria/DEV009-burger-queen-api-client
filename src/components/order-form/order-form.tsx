@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import './order-form.css'; // Asegúrate de tener un archivo CSS asociado
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import './order-form.css';
 
 interface Product {
     id: number;
     name: string;
     price: number;
     type: string;
+    image: string;
 }
 
 interface OrderFormProps {
@@ -19,13 +18,13 @@ interface OrderFormProps {
   }
 
 
-  const OrderForm: React.FC<OrderFormProps> = ({ client, products, selectedProducts, onRemoveProduct  }) => {
-    const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0);
+  const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemoveProduct  }) => {
+    const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0); //reduce acumula los valores y hace una suma de los precios.
     const [table, setTable] = useState("1");
     // const navigate = useNavigate();
     // const sendOrder = () => {
     //     // Aquí vamos a agregar la funcion para mandar la orden a la vista del cocinero
-    //     navigate('/vistadelcocinero');
+    //     navigate('/chef-view');
     // };
 
     return (
@@ -51,8 +50,8 @@ interface OrderFormProps {
                     <thead></thead>
                     <tbody>
                         {selectedProducts.map((product) => (
-                            <tr key={product.id}>
-                                <td>{product.name}</td>
+                            <tr key={product.id}> {/* fila de la tabla */}
+                                <td>{product.name}</td> {/* celda de la tabla */}
                                 <td>${product.price}</td>
                                 <td>
                                     <button

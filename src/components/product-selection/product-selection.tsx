@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './product-selection.css';
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,7 +17,7 @@ interface ProductTableProps {
   onProductSelect: (product: Product) => void;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products, selectedProducts, onProductSelect }) => {
+const ProductTable: React.FC<ProductTableProps> = ({ products, onProductSelect }) => {
   const handleProductSelect = (product: Product) => {
     onProductSelect(product);
   };
@@ -43,7 +42,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, selectedProducts,
               <td>${product.price}</td>
               <td>
                 <button className="select-button" onClick={() => handleProductSelect(product)}>
-                  <FontAwesomeIcon icon={faCheck} className="check-icon" />
+                  <FontAwesomeIcon icon={faCheck} className="check-icon" /> {/* fontawesome (es la libreria ) está conectado con css para poner el check */}
                 </button>
               </td>
             </tr>

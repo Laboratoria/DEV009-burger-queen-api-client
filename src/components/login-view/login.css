@@ -13,7 +13,7 @@
   margin-bottom: 10px; /* Agregamos un espacio entre el logo y el cuadrito */
 }
 
-#cuadrito {
+#square {
   background-color: #ffd3d3ec;
   padding: 30px;
   border-radius: 10px;

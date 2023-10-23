@@ -1,37 +1,33 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; //useeffect realizar ciertas acciones en tu componente funcional (efectos secundarios)
 import { useNavigate } from 'react-router-dom';
 import OrderForm from "../order-form/order-form";
 import UserProfile from "../user-profile/userprofile";
 import ProductTable from "../product-selection/product-selection";
 import "./menu.css";
 
-interface Product {
+interface Product { //typescript lo pide para definir product
   id: number;
   name: string;
   price: number;
   type: string;
-}
-
-interface MenuProps {
-  products: Product[];
-  selectedProducts: Product[];
+  image: string;
 }
 
 const Menu = () => {
-  const [client, setClient] = useState("");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [client, setClient] = useState(""); //crea un estado con variable client y una funcion setclient para actualizar su estado
+  const [products, setProducts] = useState<Product[]>([]); //crea un estado con variable products y una funcion setproducts para actualizar su estado
   const navigate = useNavigate();
-  const [, setAuthenticated] = useState(false);
-  const [selectedProductType, setSelectedProductType] = useState<"Breakfast" | "Lunch">("Breakfast");
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [, setAuthenticated] = useState(false);//se usa para botón logout y que cierre sesión con credenciales para tener que hacer login otra vez
+  const [selectedProductType, setSelectedProductType] = useState<"Breakfast" | "Lunch">("Breakfast"); //revisa el cambio de estado para la selección de menú
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]); //revisa el cambio de estado por el estado de los productos seleccionados
 
-  useEffect(() => {
-    fetch("http://localhost:8080/products", {
-      method: "GET",
+  useEffect(() => { //promesa
+    fetch("http://localhost:8080/products", { /*llama a la api mock y llamando a los productos*/
+      method: "GET", //método para traer productos
       headers: {
         "Content-Type": "application/json",
-        'Accept-Encoding': 'gzip, deflate, br',
-        authorization: "Bearer " + localStorage.getItem("accessToken")
+        'Accept-Encoding': 'gzip, deflate, br', //cabecera http para mejorar el rendimiento y es para comprención de contenido 
+        authorization: "Bearer " + localStorage.getItem("accessToken") //beares nombre de esquema de autenticación, obtenemos el token
       },
     })
       .then(response => response.json())
@@ -52,7 +48,7 @@ const Menu = () => {
     navigate("/");
   };
 
-  const handleProductSelect = (product: Product) => {
+  const handleProductSelect = (product: Product) => { //crea una nueva lista que contiene todos los elementos de prevSelectedProducts y luego agrega un nuevo elemento product al final de la lista.
     setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
   };
 
