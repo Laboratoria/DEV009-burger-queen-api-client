@@ -1,7 +1,7 @@
-import  FormLogIn  from "./components/login-view/log-in-view";
+import  LoginForm  from "./components/login-view/log-in-view";
 
 const App = () => {
-  return <FormLogIn />;
+  return <LoginForm />;
 };
 
 export default App;
