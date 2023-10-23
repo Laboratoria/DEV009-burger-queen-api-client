@@ -4,6 +4,8 @@ import LoginForm from "../components/login-view/log-in-view";
 import WaiterView from "../components/waiter-view/waiter-view"; // Asegúrate de importar el componente correcto
 import Menu from "../components/menu/menu";
 import OrderReady from "../components/order-ready-view/order-ready-view";
+import ChefView from "../components/chef-view/chef-view";
+import AdmiView from "../components/admi-view/admi-view";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -13,6 +15,8 @@ const AppRoutes: React.FC = () => {
         <Route path="/waiter-view" element={<WaiterView />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/order-ready-view" element={<OrderReady />} />
+        <Route path="/chef-view" element={<ChefView />} />
+        <Route path="/Admi-view" element={<AdmiView />} />
       </Routes>
     </Router>
   );
