@@ -1,9 +1,22 @@
 # Changelog
 
+## Version 2.0.0 - 2023-10-25
+
+### Sprint Learning
+- Aprendimos a instalas jst con react y typescript
+- Aprendimos a hacer el renderizado correcto de nuestra página
+
+### Added
+- Jest
+
+### Fixed
+- Renderizado de app
+- Eliminamos archivo app que tenía la misma función que routes
+
 ## Version 1.1.0 - 2023-10-17
 
 ### Sprint Learning
-- Aprendimos a usar CSS Modules.
+- Aprendimos a usar CSS.
 - Agrupamos los componentes en la vista de Waiter.
 
 ### Added
