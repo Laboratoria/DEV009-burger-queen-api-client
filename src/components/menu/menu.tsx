@@ -26,7 +26,7 @@ const Menu = () => {
       method: "GET", //método para traer productos
       headers: {
         "Content-Type": "application/json",
-        'Accept-Encoding': 'gzip, deflate, br', //cabecera http para mejorar el rendimiento y es para comprención de contenido 
+        'Accept-Encoding': 'gzip, deflate, br',//cabecera http para mejorar el rendimiento y es para comprención de contenido 
         authorization: "Bearer " + localStorage.getItem("accessToken") //beares nombre de esquema de autenticación, obtenemos el token
       },
     })
