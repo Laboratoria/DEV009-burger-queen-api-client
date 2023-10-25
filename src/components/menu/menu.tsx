@@ -59,7 +59,7 @@ const Menu = () => {
   return (
     <div className="outer-container">
       <div className="menu-view">
-      <UserProfile
+      <UserProfile //props
         profileType="waiter"
         waiterName=""
         onBackClick={handleBackClick}
