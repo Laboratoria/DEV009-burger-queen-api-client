@@ -14,7 +14,7 @@ interface Product { //typescript lo pide para definir product
 }
 
 const Menu = () => {
-  const [client, setClient] = useState(""); //crea un estado con variable client y una funcion setclient para actualizar su estado
+  const [client] = useState(""); //crea un estado con variable client y una funcion setclient para actualizar su estado
   const [products, setProducts] = useState<Product[]>([]); //crea un estado con variable products y una funcion setproducts para actualizar su estado
   const navigate = useNavigate();
   const [, setAuthenticated] = useState(false);//se usa para botón logout y que cierre sesión con credenciales para tener que hacer login otra vez
