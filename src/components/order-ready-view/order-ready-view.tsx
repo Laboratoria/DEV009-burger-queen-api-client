@@ -25,7 +25,11 @@ const OrderReady = () => {
         onBackClick={handleBackClick}
         onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
         <div className="order-ready-container">
-      
+        <button className="tablenumber">Table 1</button>
+        <button className="tablenumber">Table 2</button>
+        <button className="tablenumber">Table 3</button>
+        <button className="tablenumber">Table 4</button>
+        <button className="tablenumber">Table 5</button>
       </div>
     </>
   );
