@@ -7,7 +7,7 @@ import "./order-ready-view.css"
 
 const OrderReady = () => {
   const navigate = useNavigate();
-  const [, setAuthenticated] = useState(false);
+  const [, setAuthenticated] = useState(false); //necesitas autenticar para ingresar otra vez
 
   const handleBackClick = () => {
     navigate("/waiter-view");

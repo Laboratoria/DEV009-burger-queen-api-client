@@ -4,7 +4,7 @@ import './login.css'; //diseño de login
 import { login } from "../../services/tokenRepository";  //token unión con api mock
 
 const LoginForm = () => {   
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); //valor actual estado y la funcion
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 

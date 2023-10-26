@@ -20,6 +20,7 @@ const WaiterView = () => {
           profileType="waiter"
           waiterName=""
           onBackClick={() => { }}
+          showBackButton={false}
           onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
         <div>
           <MainMenuButtons />

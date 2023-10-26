@@ -10,6 +10,7 @@ interface UserProfileProps {
   cookName: string;
   onLogoutClick: () => void;
   onBackClick?: () => void;
+  showBackButton?: boolean;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -19,6 +20,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   cookName,
   onLogoutClick,
   onBackClick,
+  showBackButton
 }) => {
   const getWelcomeText = () => {
     switch (profileType) {
@@ -40,9 +42,11 @@ const UserProfile: React.FC<UserProfileProps> = ({
         <h2>{getWelcomeText()}</h2>
       </div>
       <div className="right">
+      {showBackButton && onBackClick && (
         <button onClick={onBackClick}>
           <FontAwesomeIcon icon={faArrowLeft} className="icon" />
         </button>
+         )}
         <button onClick={onLogoutClick}>
           <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
         </button>
