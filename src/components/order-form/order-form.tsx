@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import './order-form.css';
+import { Order } from '../chef-view/chef-view';
+import { SelectedProduct } from '../menu/menu';
 
 interface Product {
     id: number;
@@ -11,21 +13,40 @@ interface Product {
 }
 
 interface OrderFormProps {
+    id: string;
     client: string;
-    products: Product[];
-    selectedProducts: Product[];
+    selectedProducts: SelectedProduct[];
     onRemoveProduct: (product: Product) => void;
-  }
+}
 
-
-  const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemoveProduct  }) => {
-    const orderTotal = selectedProducts.reduce((total, product) => total + product.price, 0); //reduce acumula los valores y hace una suma de los precios.
+const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemoveProduct }) => {
+    const orderTotal = selectedProducts?.reduce((total, product) => total + product.product.price, 0) || 0;
     const [table, setTable] = useState("1");
-    // const navigate = useNavigate();
-    // const sendOrder = () => {
-    //     // Aquí vamos a agregar la funcion para mandar la orden a la vista del cocinero
-    //     navigate('/chef-view');
-    // };
+
+    const peticionPost = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:8080/orders", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                      authorization: "Bearer " + localStorage.getItem("accessToken")
+                },
+                body: JSON.stringify({
+                    client: client,
+                    products: selectedProducts
+                  
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     return (
         <>
@@ -49,32 +70,29 @@ interface OrderFormProps {
                 <table className="choose">
                     <thead></thead>
                     <tbody>
-                        {selectedProducts.map((product) => (
-                            <tr key={product.id}> {/* fila de la tabla */}
-                                <td>{product.name}</td> {/* celda de la tabla */}
-                                <td>${product.price}</td>
+                        {selectedProducts?.map((product) => (
+                            <tr key={product.product.id}>
+                                <td>{product.product.name}</td>
+                                <td>${product.product.price}</td>
                                 <td>
                                     <button
                                         className="btn btn-danger"
-                                        onClick={() => onRemoveProduct(product)}
+                                        onClick={() => onRemoveProduct(product.product)}
                                     >
                                         <i className="fa fa-times"></i>
                                     </button>
-
                                 </td>
-                                {/* boton para mandar la orden a la vista del cocinero */}
-                                {/* <td>
-                                    <button
-                                    className="btn btn-sendorder"
-                                    onClick={sendOrder}
-                                    >
-                                        Send Order
-                                    </button>
-                                </td> */}
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+                <button
+                    className="btn btn-sendorder"
+                    onClick={peticionPost}
+                >
+                    Send Order
+                </button>
 
                 <p className="total">Total: ${orderTotal}</p>
             </form>
@@ -83,3 +101,4 @@ interface OrderFormProps {
 };
 
 export default OrderForm;
+
