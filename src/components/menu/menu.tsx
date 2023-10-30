@@ -73,6 +73,7 @@ const Menu = () => {
           onLogoutClick={handleLogoutClick}
           administratorName={""}
           cookName={""}
+          showBackButton={true}
         />
         <div className="main-menu-buttons-container">
           <div className="food-buttons-container">

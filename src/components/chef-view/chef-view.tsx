@@ -11,7 +11,7 @@ interface Product {
   image: string;
 }
 
-export interface Order {
+interface Orders {
   client: string;
   products: { product: Product, qty: number }[];
   id: number;
@@ -25,8 +25,38 @@ interface ChefViewProps {
 
 const ChefView: React.FC<ChefViewProps> = () => {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Orders[]>([]);
   const [, setAuthenticated] = useState(false);
+  const [orderStates, setOrderStates] = useState<{ [key: number]: string }>({});
+
+  const handleStatusChange = (order: Orders, status: string) => {
+    // Cambiar el estado de la orden en el estado local
+    setOrderStates({ ...orderStates, [order.id]: status });
+
+    // Realizar una petición PATCH para actualizar el estado en la API
+    const updateOrderStatus = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/orders/2`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: "Bearer " + localStorage.getItem("accessToken")
+          },
+          body: JSON.stringify({ status }) // Envía el nuevo estado a la API
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        // Puedes manejar la respuesta de la API si es necesario
+      } catch (error) {
+        console.error("Error updating order status:", error);
+      }
+    };
+
+    updateOrderStatus();
+  };
 
   const handleBackClick = () => {
     navigate("/");
@@ -53,8 +83,15 @@ const ChefView: React.FC<ChefViewProps> = () => {
         }
 
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         setOrders(data);
+
+        // Inicializar los estados de las órdenes
+        const initialOrderStates: { [key: number]: string } = {};
+        data.forEach((orders:any) => {
+          initialOrderStates[orders.id] = 'inProgress';
+        });
+        setOrderStates(initialOrderStates);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -94,26 +131,16 @@ const ChefView: React.FC<ChefViewProps> = () => {
                 ))}
               </td>
               <td>
-                <select className='productStateR'>
-                  <option value="Pending">Pending</option>
-                  <option value="inProgress">In Progress</option>
-                  <option value="Ready">Ready</option>
-                </select>
+                <button onClick={() => handleStatusChange(order, 'ready')}>Ready</button>
+                <button onClick={() => handleStatusChange(order, 'inProgress')}>In Progress</button>
+                <div>Status: {orderStates[order.id]}</div>
               </td>
-            
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );
 }
 
 export default ChefView;
-
-
-
-
-
-

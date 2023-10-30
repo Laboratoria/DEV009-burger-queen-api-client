@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import './order-form.css';
-import { Order } from '../chef-view/chef-view';
 import { SelectedProduct } from '../menu/menu';
 
 interface Product {
@@ -22,6 +21,7 @@ interface OrderFormProps {
 const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemoveProduct }) => {
     const orderTotal = selectedProducts?.reduce((total, product) => total + product.product.price, 0) || 0;
     const [table, setTable] = useState("1");
+    const [clientName, setClientName] = useState(client);
 
     const peticionPost = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -31,12 +31,12 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                      authorization: "Bearer " + localStorage.getItem("accessToken")
+                    authorization: "Bearer " + localStorage.getItem("accessToken")
                 },
                 body: JSON.stringify({
-                    client: client,
+                    client: clientName,
+                    table: table,
                     products: selectedProducts
-                  
                 })
             });
 
@@ -51,7 +51,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
     return (
         <>
             <form className="formfororder">
-                <h2>Your order for {client}</h2>
+                <h2>Your order for </h2>
                 <label htmlFor="table">Table:</label>
                 <select
                     id="table"
@@ -65,6 +65,15 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
                     <option value="4"> 4</option>
                     <option value="5"> 5</option>
                 </select>
+
+                {/* Utilizamos clientName para el campo de entrada */}
+                <input
+                    id="clientName"
+                    type="text"
+                    value={clientName}
+                    placeholder="Client Name"
+                    onChange={(e) => setClientName(e.target.value)}
+                />
 
                 <h3>Selected Products:</h3>
                 <table className="choose">
@@ -101,4 +110,3 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
 };
 
 export default OrderForm;
-
