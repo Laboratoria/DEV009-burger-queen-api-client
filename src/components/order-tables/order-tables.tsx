@@ -1,7 +1,7 @@
 // import { useNavigate } from 'react-router-dom';
 // import { useState } from "react";
 // import UserProfile from "../user-profile/userprofile";
-import "./order-ready-view.css"
+// import "./order-ready-view.css"
 
 
 
