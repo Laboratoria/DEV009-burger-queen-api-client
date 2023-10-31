@@ -21,3 +21,10 @@
     background-color: #fff;
     padding: 5px
   }
+
+  .delivered-button {
+    background-color: green; /* Cambia el color de fondo a verde cuando se entrega */
+    color: white; /* Cambia el color del texto a blanco para mayor contraste */
+    /* Otros estilos que desees aplicar cuando se entregue la orden */
+  }
+  

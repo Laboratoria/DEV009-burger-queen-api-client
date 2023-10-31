@@ -1,16 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import UserProfile from '../user-profile/userprofile';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
-import UserProfile from "../user-profile/userprofile";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-// import "./order-ready-view.css"
-
-interface Orders {
-  table: number;
-  client: string;
-  products: { product: Product, qty: number }[];
-  id: number;
-}
+import './order-ready-view.css'
 
 interface Product {
   id: number;
@@ -20,36 +11,45 @@ interface Product {
   image: string;
 }
 
+interface Orders {
+  dateEntry: string;
+  table: number;
+  client: string;
+  products: { product: Product, qty: number }[];
+  id: number;
+  status: string;
+  dateProcessed: string;
+}
 
-const OrderReady = () => {
+const OrderReady: React.FC = () => {
   const navigate = useNavigate();
   const [, setAuthenticated] = useState(false);
   const [orders, setOrders] = useState<Orders[]>([]);
   const [orderStates, setOrderStates] = useState<{ [key: number]: string }>({});
-  const orderTotal = orders?.reduce((total, product) => total + product.products.price, 0) || 0;
-  
-  
-  const checkSolution = () => {
-    
-  }
+
+  const checkSolution = (order: Orders) => {
+    order.status = "Delivered";
+    setOrders([...orders]);
+  };
 
   const handleBackClick = () => {
-    navigate("/waiter-view");
+    navigate('/waiter-view');
   };
+
   const handleLogoutClick = () => {
     setAuthenticated(false);
-    navigate("/");
+    navigate('/');
   };
 
   useEffect(() => {
-    const peticionGet = async () => {
+    const peticionOrder = async () => {
       try {
-        const response = await fetch("http://localhost:8080/orders", {
+        const response = await fetch(`http://localhost:8080/orders`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            authorization: "Bearer " + localStorage.getItem("accessToken")
-          }
+            authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
         });
 
         if (!response.ok) {
@@ -58,22 +58,27 @@ const OrderReady = () => {
 
         const data = await response.json();
         console.log(data);
-        setOrders(data);
 
-        // Inicializar los estados de las órdenes
-        const readyOrders: { [key: number]: string } = {};
-        data.forEach((orders: any) => {
-          readyOrders[orders.id] = 'inProgress';
+        // Crear un objeto para mapear los estados de las órdenes por ID
+        const orderStatesMap: { [key: number]: string } = {};
+
+        // Actualizar el objeto orderStatesMap con los estados de las órdenes
+        data.forEach((order: any) => {
+          orderStatesMap[order.id] = order.status;
+          order.dateProcessed = order.dateProcessed;
         });
-        setOrderStates(readyOrders);
+
+        // Actualizar el estado con el objeto orderStatesMap
+        setOrderStates(orderStatesMap);
+
+        setOrders(data);
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        console.error('Error fetching orders:', error);
       }
     };
 
-    peticionGet();
+    peticionOrder();
   }, []);
-
 
   return (
     <>
@@ -81,7 +86,11 @@ const OrderReady = () => {
         profileType="waiter"
         waiterName=""
         onBackClick={handleBackClick}
-        onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} showBackButton={true} />
+        onLogoutClick={handleLogoutClick}
+        administratorName={''}
+        cookName={''}
+        showBackButton={true}
+      />
       <div className="order-ready-container">
         <table className="table orderProductWaiter">
           <thead>
@@ -102,21 +111,31 @@ const OrderReady = () => {
                 <td>{order.table}</td>
                 <td>{order.client}</td>
                 <td>
-                  {order.products && order.products.map((item, index) => (
-                    <div key={index}>
-                      {item.product.name} - Qty: {item.qty}
-                    </div>
-                  ))}
+                  {order.products &&
+                    order.products.map((item, index) => (
+                      <div key={index}>
+                        {item.product.name} - Qty: {item.qty}
+                      </div>
+                    ))}
                 </td>
                 <td>
                   <div>Status: {orderStates[order.id]}</div>
                 </td>
-                <td><p className="total">Total: ${orderTotal}</p></td>
                 <td>
-                  <button className="select-button" onClick={() =>  checkSolution (orders)}>  
-                    <FontAwesomeIcon icon={faCheck} className="check-icon" />
-                  </button>
+                  <p className="total"> ${order.products.reduce((subTotal, product) => subTotal + product.product.price * product.qty, 0)}</p>
                 </td>
+                <td>
+                  {order.status === "Delivered" ? (
+                    <button className="select-button delivered-button" onClick={() => checkSolution(order)}>
+                      Delivered
+                    </button>
+                  ) : (
+                    <button className="select-button" onClick={() => checkSolution(order)}>
+                      NO
+                    </button>
+                  )}
+                </td>
+
               </tr>
             ))}
           </tbody>

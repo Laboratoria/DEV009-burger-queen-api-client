@@ -16,15 +16,20 @@ interface OrderFormProps {
     client: string;
     selectedProducts: SelectedProduct[];
     onRemoveProduct: (product: Product) => void;
+    updateProductQty: (productId: number, newQty: number) => void;
 }
 
 const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemoveProduct }) => {
-    const orderTotal = selectedProducts?.reduce((total, product) => total + product.product.price, 0) || 0;
+    const orderTotal = selectedProducts?.reduce((total, product) => total + product.product.price * product.qty, 0) || 0;
     const [table, setTable] = useState("1");
     const [clientName, setClientName] = useState(client);
 
     const peticionPost = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+
+        // Obtener la fecha y hora actual
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
 
         try {
             const response = await fetch("http://localhost:8080/orders", {
@@ -36,7 +41,8 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
                 body: JSON.stringify({
                     client: clientName,
                     table: table,
-                    products: selectedProducts
+                    products: selectedProducts,
+                    dateEntry: formattedDate, // Agrega la fecha actual
                 })
             });
 
@@ -81,7 +87,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
                     <tbody>
                         {selectedProducts?.map((product) => (
                             <tr key={product.product.id}>
-                                <td>{product.product.name}</td>
+                                <td>{product.product.name} ({product.qty})</td>
                                 <td>${product.product.price}</td>
                                 <td>
                                     <button

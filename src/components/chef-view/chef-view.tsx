@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserProfile from '../user-profile/userprofile';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +12,13 @@ interface Product {
 }
 
 interface Orders {
+  dateEntry: string;
+  table: number;
   client: string;
   products: { product: Product, qty: number }[];
   id: number;
+  status: string;
+  dateProcessed: string;
 }
 
 interface ChefViewProps {
@@ -33,29 +37,44 @@ const ChefView: React.FC<ChefViewProps> = () => {
     // Cambiar el estado de la orden en el estado local
     setOrderStates({ ...orderStates, [order.id]: status });
 
-    // Realizar una petición PATCH para actualizar el estado en la API
-    const updateOrderStatus = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/orders/2`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: "Bearer " + localStorage.getItem("accessToken")
-          },
-          body: JSON.stringify({ status }) // Envía el nuevo estado a la API
-        });
+    // Obtén el índice de la orden actual en el estado de las órdenes
+    const orderIndex = orders.findIndex((o) => o.id === order.id);
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+    // Calcula el tiempo transcurrido para la orden actual
+    if (orderIndex !== -1) {
+      const currentDate = new Date();
+      const dateProcessed = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
 
-        // Puedes manejar la respuesta de la API si es necesario
-      } catch (error) {
-        console.error("Error updating order status:", error);
+      // Actualiza la orden con la nueva fecha procesada
+      const updatedOrders = [...orders];
+      updatedOrders[orderIndex] = { ...order, status, dateProcessed };
+
+      setOrders(updatedOrders);
+
+      // Realizar una petición PATCH para actualizar el estado en la API
+      updateOrderStatus(order.id, status, dateProcessed);
+    }
+  };
+
+  const updateOrderStatus = async (orderId: number, status: string, dateProcessed: string) => {
+    try {
+      const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: "Bearer " + localStorage.getItem("accessToken")
+        },
+        body: JSON.stringify({ status, dateProcessed })
+      });
+
+      if (!response.ok) {
+        throw Error('Network response was not ok');
       }
-    };
 
-    updateOrderStatus();
+      // Puedes manejar la respuesta de la API si es necesario
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
   };
 
   const handleBackClick = () => {
@@ -79,7 +98,7 @@ const ChefView: React.FC<ChefViewProps> = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw Error('Network response was not ok');
         }
 
         const data = await response.json();
@@ -100,6 +119,22 @@ const ChefView: React.FC<ChefViewProps> = () => {
     peticionGet();
   }, []);
 
+  const calculateTimeTaken = (order: Orders) => {
+    if (order.dateProcessed && order.dateEntry) {
+      const dateProcessed = new Date(order.dateProcessed);
+      const dateEntry = new Date(order.dateEntry);
+      const timeDifferenceInSeconds = (dateProcessed.getTime() - dateEntry.getTime()) / 1000; // Resta en segundos
+  
+      // Convierte el tiempo en segundos a minutos
+      const timeInMinutes = timeDifferenceInSeconds / 60;
+  
+      // Puedes formatear el tiempo como desees, aquí se muestra en minutos
+      return `${timeInMinutes} minutes`;
+    }
+    return 'N/A';
+  };
+  
+
   return (
     <div>
       <UserProfile
@@ -117,6 +152,7 @@ const ChefView: React.FC<ChefViewProps> = () => {
             <th>ID</th>
             <th>Products</th>
             <th>Status</th>
+            <th>Lead Time</th>
           </tr>
         </thead>
         <tbody>
@@ -135,6 +171,7 @@ const ChefView: React.FC<ChefViewProps> = () => {
                 <button onClick={() => handleStatusChange(order, 'inProgress')}>In Progress</button>
                 <div>Status: {orderStates[order.id]}</div>
               </td>
+              <td>{calculateTimeTaken(order)}</td>
             </tr>
           ))}
         </tbody>
