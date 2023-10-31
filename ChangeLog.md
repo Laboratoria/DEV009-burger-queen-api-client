@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 2.1.0 - 2023-10-31
+
+### Sprint Learning
+- Peticiones con GET, POST y PATCH.
+- Entendimos nuestro código.
+- Nuestro conocimiento de react y typescript mejoró.
+
+### Added
+- Peticiones
+- Componentes de historias de usuario 5 y 6.
+
+### Fixed
+- Funcionalidad de ordenes en chef y waiter.
+- El lugar donde guardamos los datos, en lugar de usar estados para la información, usamos las peticiones para guardarlos en nuestra API.
+
+
 ## Version 2.0.0 - 2023-10-25
 
 ### Sprint Learning
