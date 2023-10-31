@@ -6,6 +6,7 @@ import Menu from "../components/menu/menu";
 import OrderReady from "../components/order-ready-view/order-ready-view";
 import ChefView from "../components/chef-view/chef-view";
 import AdmiView from "../components/admi-view/admi-view";
+import Staff from "../components/Staff/staff";
 
 
 const AppRoutes: React.FC = () => {
@@ -18,6 +19,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/order-ready-view" element={<OrderReady />} />
         <Route path="/chef-view" element={<ChefView />} />
         <Route path="/Admi-view" element={<AdmiView />} />
+        <Route path="/Staff" element={<Staff />} />
       </Routes>
     </Router>
   );
