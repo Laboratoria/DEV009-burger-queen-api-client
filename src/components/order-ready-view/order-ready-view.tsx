@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserProfile from '../user-profile/userprofile';
 import { useNavigate } from 'react-router-dom';
-import './order-ready-view.css'
+import './order-ready-view.css';
 
 interface Product {
   id: number;
@@ -28,9 +28,14 @@ const OrderReady: React.FC = () => {
   const [orderStates, setOrderStates] = useState<{ [key: number]: string }>({});
 
   const checkSolution = (order: Orders) => {
-    order.status = "Delivered";
+    const updatedStatus = order.status === 'Delivered' ? 'NO' : 'Delivered';
+    order.status = updatedStatus;
     setOrders([...orders]);
+  
+    // Guardar el estado actual en el localStorage
+    localStorage.setItem(`orderState_${order.id}`, updatedStatus); // Corrección aquí
   };
+  
 
   const handleBackClick = () => {
     navigate('/waiter-view');
@@ -51,34 +56,35 @@ const OrderReady: React.FC = () => {
             authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
-
+  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-
+  
         const data = await response.json();
-        console.log(data);
-
+        setOrders(data);
+        
         // Crear un objeto para mapear los estados de las órdenes por ID
         const orderStatesMap: { [key: number]: string } = {};
-
+  
         // Actualizar el objeto orderStatesMap con los estados de las órdenes
         data.forEach((order: any) => {
+          const savedState = localStorage.getItem(`orderState_${order.id}`);
+          order.status = savedState || order.status; // Usar el estado del localStorage o el original
           orderStatesMap[order.id] = order.status;
           order.dateProcessed = order.dateProcessed;
         });
-
+  
         // Actualizar el estado con el objeto orderStatesMap
         setOrderStates(orderStatesMap);
-
-        setOrders(data);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
     };
-
+  
     peticionOrder();
   }, []);
+  
 
   return (
     <>
@@ -122,20 +128,18 @@ const OrderReady: React.FC = () => {
                   <div>Status: {orderStates[order.id]}</div>
                 </td>
                 <td>
-                  <p className="total"> ${order.products.reduce((subTotal, product) => subTotal + product.product.price * product.qty, 0)}</p>
+                  <p className="total">
+                    ${order.products.reduce((subTotal, product) => subTotal + product.product.price * product.qty, 0)}
+                  </p>
                 </td>
                 <td>
-                  {order.status === "Delivered" ? (
-                    <button className="select-button delivered-button" onClick={() => checkSolution(order)}>
-                      Delivered
-                    </button>
-                  ) : (
-                    <button className="select-button" onClick={() => checkSolution(order)}>
-                      NO
-                    </button>
-                  )}
+                  <button
+                    className={order.status === 'Delivered' ? 'select-button delivered-button' : 'select-button'}
+                    onClick={() => checkSolution(order)}
+                  >
+                    {order.status === 'Delivered' ? 'Delivered' : 'NO'}
+                  </button>
                 </td>
-
               </tr>
             ))}
           </tbody>

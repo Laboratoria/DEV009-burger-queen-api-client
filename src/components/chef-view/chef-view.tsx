@@ -21,7 +21,6 @@ interface Orders {
   dateProcessed: string;
 }
 
-
 const ChefView: React.FC = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Orders[]>([]);
@@ -31,6 +30,7 @@ const ChefView: React.FC = () => {
   const handleStatusChange = (order: Orders, status: string) => {
     // Cambiar el estado de la orden en el estado local
     setOrderStates({ ...orderStates, [order.id]: status });
+    localStorage.setItem(`orderState_${order.id}`, status);
 
     // Obtén el índice de la orden actual en el estado de las órdenes
     const orderIndex = orders.findIndex((o) => o.id === order.id);
@@ -43,7 +43,6 @@ const ChefView: React.FC = () => {
       // Actualiza la orden con la nueva fecha procesada
       const updatedOrders = [...orders];
       updatedOrders[orderIndex] = { ...order, status, dateProcessed };
-console.log(updatedOrders)
       setOrders(updatedOrders);
 
       // Realizar una petición PATCH para actualizar el estado en la API
@@ -56,40 +55,38 @@ console.log(updatedOrders)
       const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
-          authorization: "Bearer " + localStorage.getItem("accessToken")
+          'Content-Type': 'application.json',
+          authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
-        body: JSON.stringify({ status, dateProcessed })
+        body: JSON.stringify({ status, dateProcessed }),
       });
 
       if (!response.ok) {
         throw Error('Network response was not ok');
       }
-
-      // Puedes manejar la respuesta de la API si es necesario
     } catch (error) {
-      console.error("Error updating order status:", error);
+      console.error('Error updating order status:', error);
     }
   };
 
   const handleBackClick = () => {
-    navigate("/");
+    navigate('/');
   };
 
   const handleLogoutClick = () => {
     setAuthenticated(false);
-    navigate("/");
+    navigate('/');
   };
 
   useEffect(() => {
     const peticionGet = async () => {
       try {
-        const response = await fetch("http://localhost:8080/orders", {
+        const response = await fetch('http://localhost:8080/orders', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            authorization: "Bearer " + localStorage.getItem("accessToken")
-          }
+            authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
         });
 
         if (!response.ok) {
@@ -98,16 +95,18 @@ console.log(updatedOrders)
 
         const data = await response.json();
         console.log(data);
-        setOrders(data);
+        localStorage.setItem('orders', JSON.stringify(data));
 
         // Inicializar los estados de las órdenes
         const initialOrderStates: { [key: number]: string } = {};
-        data.forEach(() => {
-          // initialOrderStates[orders.id] = 'inProgress';
+        data.forEach((order) => {
+          const savedState = localStorage.getItem(`orderState_${order.id}`);
+          initialOrderStates[order.id] = savedState || 'inProgress';
         });
         setOrderStates(initialOrderStates);
+        setOrders(data);
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        console.error('Error fetching orders:', error);
       }
     };
 
@@ -118,17 +117,21 @@ console.log(updatedOrders)
     if (order.dateProcessed && order.dateEntry) {
       const dateProcessed = new Date(order.dateProcessed);
       const dateEntry = new Date(order.dateEntry);
-      const timeDifferenceInSeconds = (dateProcessed.getTime() - dateEntry.getTime()) / 1000; // Resta en segundos
-  
+      const timeDifferenceInSeconds = (dateProcessed.getTime() - dateEntry.getTime()) / 1000;
+
       // Convierte el tiempo en segundos a minutos
       const timeInMinutes = timeDifferenceInSeconds / 60;
-  
-      // Puedes formatear el tiempo como desees, aquí se muestra en minutos
-      return `${timeInMinutes} minutes`;
+
+      if (timeInMinutes >= 60) {
+        // Si el tiempo es de 60 minutos o más, muestra en horas
+        const timeInHours = timeInMinutes / 60;
+        return `${timeInHours.toFixed(2)} hours`;
+      }
+
+      return `${timeInMinutes.toFixed(2)} minutes`;
     }
     return 'N/A';
   };
-  
 
   return (
     <div>
@@ -162,8 +165,19 @@ console.log(updatedOrders)
                 ))}
               </td>
               <td>
-                <button onClick={() => handleStatusChange(order, 'ready')}>Ready</button>
-                <button onClick={() => handleStatusChange(order, 'inProgress')}>In Progress</button>
+                <button
+                  className="button-ready"
+                  onClick={() => handleStatusChange(order, 'ready')}
+                  disabled={orderStates[order.id] === 'ready'}
+                >
+                  Ready
+                </button>
+                <button
+                  onClick={() => handleStatusChange(order, 'inProgress')}
+                  disabled={orderStates[order.id] === 'ready'}
+                >
+                  In Progress
+                </button>
                 <div>Status: {orderStates[order.id]}</div>
               </td>
               <td>{calculateTimeTaken(order)}</td>
