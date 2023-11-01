@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import EditDeleteButtonsAdmi from '../Edit-delete-button-admi/Edit-Delete-button-admi';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 interface Product {
@@ -11,50 +10,19 @@ interface Product {
     image: string;
 }
 
-interface ProductTableProps {
-    onAddProductAdmi: (product: Product) => void;
-}
-
-const ProductTableAdmi: React.FC<ProductTableProps> = ({ onAddProductAdmi }) => {
-    const [editedProductName] = useState('');
-    const [editedProductPrice] = useState('');
-    const [editedProductType] = useState<'Breakfast' | 'Lunch'>('Breakfast');
-    const [editedProductImage] = useState('');
+const ProductTableAdmi: React.FC = () => {
     const [productsAdmi, setProductsAdmi] = useState<Product[]>([]);
     const [showAddModal, setShowAddModal] = useState(false);
-
-    const handleAddProduct = async () => {
-        const newProduct: Product = {
-            name: editedProductName,
-            price: editedProductPrice,
-            type: editedProductType,
-            image: editedProductImage,
-            id: 0,
-        };
-
-        try {
-            const response = await fetch(`http://localhost:8080/products`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: 'Bearer ' + localStorage.getItem('accessToken'),
-                },
-                body: JSON.stringify(newProduct),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                onAddProductAdmi(data); // Actualizar el estado con el nuevo producto
-                setShowAddModal(false);
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+    const [editedProduct, setEditedProduct] = useState<Product>({
+        id: 0, // Puedes asignar un valor inicial si es necesario
+        name: '', // Puedes asignar un valor inicial si es necesario
+        price: '', // Puedes asignar un valor inicial si es necesario
+        type: 'Breakfast', // Puedes asignar un valor inicial si es necesario
+        image: '', // Puedes asignar un valor inicial si es necesario
+    });
 
     useEffect(() => {
+        // Realiza una solicitud GET para obtener la lista de productos
         fetch('http://localhost:8080/products', {
             method: 'GET',
             headers: {
@@ -72,6 +40,93 @@ const ProductTableAdmi: React.FC<ProductTableProps> = ({ onAddProductAdmi }) => 
             });
     }, []);
 
+    const handleAddProduct = async (newProduct: Product) => {
+        try {
+            // Realiza una solicitud POST para agregar un nuevo producto
+            const response = await fetch('http://localhost:8080/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+                },
+                body: JSON.stringify(newProduct),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setProductsAdmi([...productsAdmi, data]);
+                setShowAddModal(false);
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleEditProduct = async () => {
+        if (editedProduct) {
+            try {
+                // Realiza una solicitud PUT para editar el producto
+                const response = await fetch(`http://localhost:8080/products/${editedProduct.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+                    },
+                    body: JSON.stringify(editedProduct),
+                });
+
+                if (response.ok) {
+                    setProductsAdmi((prevProducts) =>
+                        prevProducts.map((product) =>
+                            product.id === editedProduct.id ? editedProduct : product
+                        )
+                    );
+                    setEditedProduct({
+                        id: 0,
+                        name: '',
+                        price: '',
+                        type: 'Breakfast',
+                        image: '',
+                      });
+                    setShowAddModal(false);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    };
+
+    const handleRemoveProduct = (id: number) => {
+        try {
+            // Realiza una solicitud DELETE para eliminar el producto
+            fetch(`http://localhost:8080/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        setProductsAdmi((prevProducts) =>
+                            prevProducts.filter((product) => product.id !== id)
+                        );
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div className="staff-view">
             <table className="table custom-table">
@@ -85,8 +140,8 @@ const ProductTableAdmi: React.FC<ProductTableProps> = ({ onAddProductAdmi }) => 
                     </tr>
                 </thead>
                 <tbody>
-                    {productsAdmi && productsAdmi.map((product, index) => (
-                        <tr key={index}>
+                    {productsAdmi.map((product) => (
+                        <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.type}</td>
                             <td>${product.price}</td>
@@ -94,35 +149,125 @@ const ProductTableAdmi: React.FC<ProductTableProps> = ({ onAddProductAdmi }) => 
                                 <img className="product-image" src={product.image} alt={product.name} />
                             </td>
                             <td>
-                                <EditDeleteButtonsAdmi
-                                onEditClickAdmi={() => {
-                                    setUserForEdit(user);
-                                    handleShowModal();
-                                }}
-                                onDeleteClickAdmi={() => onRemoveUser(user)} />
+                                <button
+                                    className="edit-button"
+                                    onClick={() => {
+                                        setEditedProduct(product);
+                                        setShowAddModal(true);
+                                    }}
+                                >
+                                    Edit
+                                </button>
+                                <button className="delete-button" onClick={() => handleRemoveProduct(product.id)}>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            <Button className='ButtonAddProduct' onClick={() => setShowAddModal(true)}>Add Product</Button>
+            <Button className="ButtonAddProduct" onClick={() => setShowAddModal(true)}>
+                Add Product
+            </Button>
 
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Product</Modal.Title>
+                    <Modal.Title>{editedProduct ? 'Edit Product' : 'Add Product'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        {/* Formulario de agregar producto */}
+                        <Form.Group controlId="formBasicName">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={editedProduct.name}
+                                onChange={(e) =>
+                                    setEditedProduct({
+                                        ...editedProduct,
+                                        name: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter name"
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicType">
+                            <Form.Label>Type</Form.Label>
+                            <Form.Control
+                                as="select"
+                                value={editedProduct ? editedProduct.type : 'Breakfast'}
+                                onChange={(e) =>
+                                    setEditedProduct({
+                                        ...editedProduct,
+                                        type: e.target.value as 'Breakfast' | 'Lunch',
+                                    })
+                                }
+                            >
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPrice">
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={editedProduct ? editedProduct.price : ''}
+                                onChange={(e) =>
+                                    setEditedProduct({
+                                        ...editedProduct,
+                                        price: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter price"
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicImage">
+                            <Form.Label>Image URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={editedProduct ? editedProduct.image : ''}
+                                onChange={(e) =>
+                                    setEditedProduct({
+                                        ...editedProduct,
+                                        image: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter image URL"
+                            />
+                        </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowAddModal(false)}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleAddProduct}>
-                        Add Product
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            if (editedProduct) {
+                                handleEditProduct();
+                            } else {
+                                const name = document.getElementById('formBasicName') as HTMLInputElement;
+                                const type = document.getElementById('formBasicType') as HTMLSelectElement;
+                                const price = document.getElementById('formBasicPrice') as HTMLInputElement;
+                                const image = document.getElementById('formBasicImage') as HTMLInputElement;
+
+                                const newProduct: Product = {
+                                    name: name.value,
+                                    price: price.value,
+                                    type: type.value,
+                                    image: image.value,
+                                    id: 0,
+                                };
+
+                                handleAddProduct(newProduct);
+                            }
+                        }}
+                    >
+                        {editedProduct ? 'Save Changes' : 'Add Product'}
                     </Button>
                 </Modal.Footer>
             </Modal>
