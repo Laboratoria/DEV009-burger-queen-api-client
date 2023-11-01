@@ -21,13 +21,8 @@ interface Orders {
   dateProcessed: string;
 }
 
-interface ChefViewProps {
-  ID: number;
-  Name: string;
-  Status: string;
-}
 
-const ChefView: React.FC<ChefViewProps> = () => {
+const ChefView: React.FC = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Orders[]>([]);
   const [, setAuthenticated] = useState(false);
@@ -48,7 +43,7 @@ const ChefView: React.FC<ChefViewProps> = () => {
       // Actualiza la orden con la nueva fecha procesada
       const updatedOrders = [...orders];
       updatedOrders[orderIndex] = { ...order, status, dateProcessed };
-
+console.log(updatedOrders)
       setOrders(updatedOrders);
 
       // Realizar una petición PATCH para actualizar el estado en la API
@@ -107,8 +102,8 @@ const ChefView: React.FC<ChefViewProps> = () => {
 
         // Inicializar los estados de las órdenes
         const initialOrderStates: { [key: number]: string } = {};
-        data.forEach((orders:any) => {
-          initialOrderStates[orders.id] = 'inProgress';
+        data.forEach(() => {
+          // initialOrderStates[orders.id] = 'inProgress';
         });
         setOrderStates(initialOrderStates);
       } catch (error) {
