@@ -25,7 +25,7 @@ const AdmiView = () => {
         <Link to="/Staff"> 
         <button className="button-staff">STAFF</button>
       </Link>
-      <Link to="/">
+      <Link to="/admi-products">
         <button className="button-edit-menu">MENU</button>
       </Link>
         </div>
