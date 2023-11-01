@@ -49,10 +49,23 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
+            // Restablecer los valores del formulario y la selección de productos
+            setTable("1");
+            setClientName(client);
+            onRemoveAllProducts(); // Esta función debería eliminar todos los productos seleccionados
         } catch (error) {
             console.error('Error:', error);
         }
     }
+
+    const onRemoveAllProducts = () => {
+        // Implementa la lógica para eliminar todos los productos seleccionados.
+        // Puedes usar un bucle para llamar a `onRemoveProduct` para cada producto seleccionado.
+        selectedProducts.forEach((product) => {
+            onRemoveProduct(product.product);
+        });
+    };
 
     return (
         <>
@@ -102,10 +115,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
                     </tbody>
                 </table>
 
-                <button
-                    className="btn btn-sendorder"
-                    onClick={peticionPost}
-                >
+                <button className="btn btn-sendorder" onClick={peticionPost}>
                     Send Order
                 </button>
 
