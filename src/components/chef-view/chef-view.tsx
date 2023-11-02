@@ -55,12 +55,12 @@ const ChefView: React.FC = () => {
       const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application.json',
+          'Content-Type': 'application/json',  // Corrección aquí
           authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
         body: JSON.stringify({ status, dateProcessed }),
       });
-
+  
       if (!response.ok) {
         throw Error('Network response was not ok');
       }
@@ -68,6 +68,8 @@ const ChefView: React.FC = () => {
       console.error('Error updating order status:', error);
     }
   };
+  
+  
 
   const handleBackClick = () => {
     navigate('/');
@@ -88,20 +90,20 @@ const ChefView: React.FC = () => {
             authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
-
+  
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
-
+  
         const data = await response.json();
         console.log(data);
         localStorage.setItem('orders', JSON.stringify(data));
-
+  
         // Inicializar los estados de las órdenes
         const initialOrderStates: { [key: number]: string } = {};
-        data.forEach((order) => {
+        data.forEach((order: any) => {
           const savedState = localStorage.getItem(`orderState_${order.id}`);
-          initialOrderStates[order.id] = savedState || 'inProgress';
+          initialOrderStates[order.id] = savedState || 'inProgress'; // Asegúrate de usar 'inProgress' aquí
         });
         setOrderStates(initialOrderStates);
         setOrders(data);
@@ -109,29 +111,33 @@ const ChefView: React.FC = () => {
         console.error('Error fetching orders:', error);
       }
     };
-
+  
     peticionGet();
   }, []);
+  
 
   const calculateTimeTaken = (order: Orders) => {
     if (order.dateProcessed && order.dateEntry) {
       const dateProcessed = new Date(order.dateProcessed);
       const dateEntry = new Date(order.dateEntry);
-      const timeDifferenceInSeconds = (dateProcessed.getTime() - dateEntry.getTime()) / 1000;
-
-      // Convierte el tiempo en segundos a minutos
-      const timeInMinutes = timeDifferenceInSeconds / 60;
-
+  
+      // Convertimos las fechas a milisegundos
+      const timeDifferenceInMilliseconds = dateProcessed.getTime() - dateEntry.getTime();
+  
+      // Convierte el tiempo en milisegundos a minutos
+      const timeInMinutes = timeDifferenceInMilliseconds / (1000 * 60);
+  
       if (timeInMinutes >= 60) {
         // Si el tiempo es de 60 minutos o más, muestra en horas
         const timeInHours = timeInMinutes / 60;
         return `${timeInHours.toFixed(2)} hours`;
       }
-
+  
       return `${timeInMinutes.toFixed(2)} minutes`;
     }
     return 'N/A';
   };
+  
 
   return (
     <div>
@@ -190,3 +196,4 @@ const ChefView: React.FC = () => {
 }
 
 export default ChefView;
+
