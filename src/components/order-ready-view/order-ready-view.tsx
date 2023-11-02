@@ -19,33 +19,23 @@ interface Orders {
   id: number;
   status: string;
   dateProcessed: string;
+  delivered: boolean; 
 }
 
 const OrderReady: React.FC = () => {
   const navigate = useNavigate();
   const [, setAuthenticated] = useState(false);
   const [orders, setOrders] = useState<Orders[]>([]);
-  const [orderStates, setOrderStates] = useState<{ [key: number]: string }>({});
 
   const checkSolution = (order: Orders) => {
-    const updatedStatus = order.status === 'Delivered' ? 'NO' : 'Delivered';
-    order.status = updatedStatus;
+    const updatedDelivered = !order.delivered; 
+    order.delivered = updatedDelivered; 
     setOrders([...orders]);
-  
+
     // Guardar el estado actual en el localStorage
-    localStorage.setItem(`orderState_${order.id}`, updatedStatus); // Corrección aquí
+    localStorage.setItem(`orderDelivered_${order.id}`, updatedDelivered.toString());
   };
   
-
-  const handleBackClick = () => {
-    navigate('/waiter-view');
-  };
-
-  const handleLogoutClick = () => {
-    setAuthenticated(false);
-    navigate('/');
-  };
-
   useEffect(() => {
     const peticionOrder = async () => {
       try {
@@ -62,21 +52,11 @@ const OrderReady: React.FC = () => {
         }
   
         const data = await response.json();
-        setOrders(data);
-        
-        // Crear un objeto para mapear los estados de las órdenes por ID
-        const orderStatesMap: { [key: number]: string } = {};
-  
-        // Actualizar el objeto orderStatesMap con los estados de las órdenes
-        data.forEach((order: any) => {
-          const savedState = localStorage.getItem(`orderState_${order.id}`);
-          order.status = savedState || order.status; // Usar el estado del localStorage o el original
-          orderStatesMap[order.id] = order.status;
-          order.dateProcessed = order.dateProcessed;
-        });
-  
-        // Actualizar el estado con el objeto orderStatesMap
-        setOrderStates(orderStatesMap);
+        const ordersWithDeliveredFlag = data.map((order: { id: any; }) => ({
+          ...order,
+          delivered: localStorage.getItem(`orderDelivered_${order.id}`) === 'true'
+        }));
+        setOrders(ordersWithDeliveredFlag);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -84,7 +64,15 @@ const OrderReady: React.FC = () => {
   
     peticionOrder();
   }, []);
-  
+
+  const handleBackClick = () => {
+    navigate('/waiter-view');
+  };
+
+  const handleLogoutClick = () => {
+    setAuthenticated(false);
+    navigate('/');
+  };
 
   return (
     <>
@@ -125,7 +113,7 @@ const OrderReady: React.FC = () => {
                     ))}
                 </td>
                 <td>
-                  <div>Status: {orderStates[order.id]}</div>
+                  <div>Status: {order.status}</div>
                 </td>
                 <td>
                   <p className="total">
@@ -134,10 +122,10 @@ const OrderReady: React.FC = () => {
                 </td>
                 <td>
                   <button
-                    className={order.status === 'Delivered' ? 'select-button delivered-button' : 'select-button'}
+                    className={order.delivered ? 'select-button delivered-button' : 'select-button'}
                     onClick={() => checkSolution(order)}
                   >
-                    {order.status === 'Delivered' ? 'Delivered' : 'NO'}
+                    {order.delivered ? 'Delivered' : 'NO'}
                   </button>
                 </td>
               </tr>
@@ -150,3 +138,5 @@ const OrderReady: React.FC = () => {
 };
 
 export default OrderReady;
+
+
