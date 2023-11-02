@@ -31,11 +31,11 @@ const OrderReady: React.FC = () => {
     const updatedStatus = order.status === 'Delivered' ? 'NO' : 'Delivered';
     order.status = updatedStatus;
     setOrders([...orders]);
-  
+
     // Guardar el estado actual en el localStorage
     localStorage.setItem(`orderState_${order.id}`, updatedStatus); // Corrección aquí
   };
-  
+
 
   const handleBackClick = () => {
     navigate('/waiter-view');
@@ -56,17 +56,17 @@ const OrderReady: React.FC = () => {
             authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
-  
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-  
+
         const data = await response.json();
         setOrders(data);
-        
+
         // Crear un objeto para mapear los estados de las órdenes por ID
         const orderStatesMap: { [key: number]: string } = {};
-  
+
         // Actualizar el objeto orderStatesMap con los estados de las órdenes
         data.forEach((order: any) => {
           const savedState = localStorage.getItem(`orderState_${order.id}`);
@@ -74,17 +74,17 @@ const OrderReady: React.FC = () => {
           orderStatesMap[order.id] = order.status;
           order.dateProcessed = order.dateProcessed;
         });
-  
+
         // Actualizar el estado con el objeto orderStatesMap
         setOrderStates(orderStatesMap);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
     };
-  
+
     peticionOrder();
   }, []);
-  
+
 
   return (
     <>

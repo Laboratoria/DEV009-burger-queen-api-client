@@ -55,7 +55,7 @@ const ChefView: React.FC = () => {
       const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application.json',
+          'Content-Type': 'application/json',
           authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
         body: JSON.stringify({ status, dateProcessed }),
@@ -99,9 +99,16 @@ const ChefView: React.FC = () => {
 
         // Inicializar los estados de las órdenes
         const initialOrderStates: { [key: number]: string } = {};
-        data.forEach((order) => {
+        data.forEach((order: any) => {
           const savedState = localStorage.getItem(`orderState_${order.id}`);
           initialOrderStates[order.id] = savedState || 'inProgress';
+
+          // Verifica si la fecha de entrada está presente y es válida
+          if (order.dateEntry) {
+            const entryDate = new Date(order.dateEntry);
+            // Guarda la fecha de entrada en el estado local
+            localStorage.setItem(`entryDate_${order.id}`, entryDate.toString());
+          }
         });
         setOrderStates(initialOrderStates);
         setOrders(data);
@@ -116,11 +123,13 @@ const ChefView: React.FC = () => {
   const calculateTimeTaken = (order: Orders) => {
     if (order.dateProcessed && order.dateEntry) {
       const dateProcessed = new Date(order.dateProcessed);
-      const dateEntry = new Date(order.dateEntry);
-      const timeDifferenceInSeconds = (dateProcessed.getTime() - dateEntry.getTime()) / 1000;
+      const entryDate = new Date(localStorage.getItem(`entryDate_${order.id}`));
 
-      // Convierte el tiempo en segundos a minutos
-      const timeInMinutes = timeDifferenceInSeconds / 60;
+      // Convertimos las fechas a milisegundos
+      const timeDifferenceInMilliseconds = dateProcessed.getTime() - entryDate.getTime();
+
+      // Convierte el tiempo en milisegundos a minutos
+      const timeInMinutes = timeDifferenceInMilliseconds / (1000 * 60);
 
       if (timeInMinutes >= 60) {
         // Si el tiempo es de 60 minutos o más, muestra en horas

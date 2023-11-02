@@ -23,6 +23,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
     const orderTotal = selectedProducts?.reduce((total, product) => total + product.product.price * product.qty, 0) || 0;
     const [table, setTable] = useState("1");
     const [clientName, setClientName] = useState(client);
+    
 
     const peticionPost = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -65,6 +66,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ client, selectedProducts, onRemov
         selectedProducts.forEach((product) => {
             onRemoveProduct(product.product);
         });
+       
     };
 
     return (
