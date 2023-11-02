@@ -7,8 +7,8 @@
 }
 
 .logo {
-  width: 400px;
-  height: 120px;
+  width: 250px; /* Ajusta el tamaño del logo */
+  height: auto; /* Permite que la altura se ajuste proporcionalmente al ancho */
   display: block;
   margin-bottom: 10px; /* Agregamos un espacio entre el logo y el cuadrito */
 }
@@ -17,8 +17,8 @@
   background-color: #ffd3d3ec;
   padding: 30px;
   border-radius: 10px;
-  width: 350px;
-  height: 150px;
+  width: 80%; /* Ajusta el cuadro al 80% del ancho del contenedor padre */
+  margin: 10px auto; /* Centra el cuadro horizontalmente con un espacio de 10px en la parte superior e inferior */
   border: 3px solid #326e99;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@
 #emailbox, #passwordbox {
   border: 3px solid #f0b7b7ec;
   border-radius: 5px;
-  width: calc(100% - 20px);
+  width: calc(100% - 20px); /* Ajusta el ancho de los campos de entrada */
   height: 40px;
   text-align: center;
   font-family: "Lucida Console", Courier, monospace;
@@ -38,7 +38,7 @@
 }
 
 #loginButton {
-  width: 100px;
+  width: 100%; /* Haz que el botón ocupe todo el ancho del cuadro */
   height: 40px;
   background-color: #f6b7b7ec;
   color: rgb(255, 255, 255);
@@ -53,4 +53,24 @@
 #emailbox::placeholder, #passwordbox::placeholder {
   font-weight: bold;
   color: #2e4789;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 250px; /* Ajusta el tamaño del logo */
+  }
+
+  #square {
+    width: 80%; /* Ajusta el cuadro al 80% del ancho del contenedor padre */
+    margin: 10px auto; /* Centra el cuadro horizontalmente con un espacio de 10px en la parte superior e inferior */
+  }
+
+  #emailbox, #passwordbox {
+    width: calc(100% - 20px); /* Ajusta el ancho de los campos de entrada */
+  }
+
+  #loginButton {
+    width: 100%; /* Haz que el botón ocupe todo el ancho del cuadro */
+    margin-top: 10px; /* Agrega espacio entre los campos de entrada y el botón */
+  }
 }

@@ -1,4 +1,5 @@
 .formfororder {
+  margin-top:70px;
     font-family: "Lucida Console", Courier, monospace;
     font-style: italic;
     color: #FFA9AA; /* Rosa */
@@ -7,7 +8,7 @@
   .inputfororder {
     border: 2px solid #00578D; /* Azul */
     color: #00578D; /* Azul */
-    font-size: 16px; /* Tamaño de fuente */
+    font-size: 10px; /* Tamaño de fuente */
     padding: 5px;
   }
   
@@ -38,7 +39,7 @@
     color: #FFA9AA; /* Rosa */
     border: none;
     padding: 10px 20px;
-    font-size: 24px; /* Tamaño de fuente */
+    font-size: 20px; /* Tamaño de fuente */
     cursor: pointer;
   }
   
@@ -58,12 +59,12 @@
     background-color: #00578D;
     color: #FFA9AA;
     border: none;
-    font-size: 24px; /* Tamaño del icono */
+    font-size: 20px; /* Tamaño del icono */
   }
   
   .fa-times {
     color: #ffffff; /* Azul */
     background-color:#d41c1f;
-    font-size: 35px;
+    font-size: 30px;
   }
   

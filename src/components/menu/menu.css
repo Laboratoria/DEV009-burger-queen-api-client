@@ -1,7 +1,7 @@
 .menu-view {
     background-color: #00578D;
     color: #ffffff;
-    height: 100vh; /* Asegura que el fondo cubra toda la altura de la ventana */
+    height: 100vh;
 }
 
 .menu-container {
@@ -13,23 +13,34 @@
     padding: 10px;
     background-color: #ffffff;
     border-radius: 10px;
-    height: 610px; 
+    height: 610px;
 }
 
-
 .user-profile-container {
-    background-color: #00578D; 
+    background-color: #00578D;
     padding: 10px;
-    border-radius: 10px; 
-    margin-bottom: 1em; 
+    border-radius: 10px;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Asegura que los elementos se apilen verticalmente */
 }
 
 .food-buttons-container {
     display: flex;
-    height: 2.5em;
-    gap: 2em; /* Espaciado entre botones reducido */
+    gap: 2em;
     background-color: #ffffff;
+    align-items: flex-start;
+    /* Alinea los elementos en la parte superior */
+    margin-top: -28em;
+    /* Agrega un espacio entre el user-profile-container y food-buttons-container */
+    margin-left: -3px;
+    flex-direction:row;
 }
+
+
 
 .lunch {
     border: 5px solid #FDA8AD;
@@ -44,7 +55,7 @@
     font-weight: bold;
     background-color: #00578D;
     color: #FDA8AD;
-    margin-right: -5px; 
+    margin-right: -5px;
 }
 
 .breakfast {
@@ -63,14 +74,43 @@
 }
 
 .outer-container {
-    background-color: #00578D; 
-    padding: 20px; 
-    border-radius: 10px; 
-  }
-  
-  h2,h3,p {
-    color: #00578D; 
+    background-color: #00578D;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2,
+h3,
+p {
+    color: #00578D;
     font-family: "Lucida Console", Courier, monospace;
     font-style: italic;
     font-weight: bold;
-  }
+}
+
+.productsSelection {
+    margin-left: -28em;
+    height: 28em;
+    margin-top: 0;
+}
+
+
+
+/* Media Queries para tablet */
+@media (max-width: 768px) {
+    .menu-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .food-buttons-container {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .lunch,
+    .breakfast {
+        width: 100%;
+        margin: 0;
+    }
+}

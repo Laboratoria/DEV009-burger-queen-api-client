@@ -1,18 +1,28 @@
-import  "./main-menu-buttons.css"
-
-import { Link } from "react-router-dom"; //link viene desde react
+import { useNavigate } from "react-router-dom";
+import "./main-menu-buttons.css";
 
 const MainMenuButtons = () => {
+  const navigate = useNavigate(); // Obtenemos la función de navegación
+
+  const handleMenuButtonClick = () => {
+    navigate("/menu"); // Navegamos a la ruta /menu cuando se hace clic en el botón
+  };
+
+  const handleOrderReadyButtonClick = () => {
+    navigate("/order-ready-view"); // Navegamos a la ruta /order-ready-view cuando se hace clic en el botón
+  };
+
   return (
     <div className="main-menu-buttons-container">
-      <Link to="/menu"> {/*link te ayuda a moverte a otro componente*/}
-        <button className="menu-button">MENU</button>
-      </Link>
-      <Link to="/order-ready-view">
-        <button className="order-ready-button">ORDER READY</button>
-      </Link>
+      <button className="menu-button" onClick={handleMenuButtonClick}>
+        MENU
+      </button>
+      <button className="order-ready-button" onClick={handleOrderReadyButtonClick}>
+        ORDER READY
+      </button>
     </div>
   );
 };
 
 export default MainMenuButtons;
+
