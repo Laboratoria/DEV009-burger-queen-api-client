@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserProfile from '../user-profile/userprofile';
 import { useNavigate } from 'react-router-dom';
+import "./chef-view.css"
 
 interface Product {
   id: number;

@@ -5,7 +5,10 @@
   justify-content: space-between;
   padding: 10px;
   background-color: #fff;
+  height: 90px; 
+  margin: 0 !important;
 }
+
 
 .left img {
   width: 150px;
@@ -35,7 +38,7 @@
   border: 2px solid #00578D;
   border-radius: 5px;
   padding: 5px;
-  margin: 0 5px; /* Añadimos un pequeño espacio entre los iconos */
+  margin: 0, 5px; /* Añadimos un pequeño espacio entre los iconos */
 }
 
 .icon {

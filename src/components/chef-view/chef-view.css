@@ -1,0 +1,58 @@
+.product-cook {
+    width: 100%;
+    border: 2px solid #00578D;
+    border-collapse: collapse;
+    margin-top: 1em;
+    font-family: 'Lucida Console', Courier, monospace;
+  }
+  
+  .product-cook th {
+    background-color: #FFF; /* Fondo blanco */
+    color: #FDA8AD; /* Texto rosado */
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #00578D; /* Línea azul */
+  }
+  
+  .product-cook td {
+    color: #d47d7d; /* Color del texto en las celdas */
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #00578D; /* Línea azul */
+  }
+  
+  .button-ready {
+    background-color: #00578D;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .button-in-progress {
+    background-color: #FDA8AD;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 768px) {
+    /* Estilos para tablet */
+    .product-cook th,
+    .product-cook td {
+      font-size: 14px;
+      padding: 6px;
+    }
+  
+    .button-ready,
+    .button-in-progress {
+      font-size: 14px;
+      padding: 4px 8px;
+    }
+  }
+  
+  

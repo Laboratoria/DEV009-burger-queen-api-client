@@ -2,7 +2,7 @@ import  { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import UserProfile from "../user-profile/userprofile";
 import ProductTableAdmi from "../Product-table-admi/Product-table-admi";
-
+import "./admi-products.css"
 
 
 
@@ -13,7 +13,7 @@ const MenuAdmi = () => {
 
 
   const handleBackClick = () => {
-    navigate("/waiter-view");
+    navigate("/admi-view");
   };
 
   const handleLogoutClick = () => {
