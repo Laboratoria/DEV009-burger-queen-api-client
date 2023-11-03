@@ -40,9 +40,9 @@
 #loginButton {
   width: 100%; /* Haz que el botón ocupe todo el ancho del cuadro */
   height: 40px;
-  background-color: #f6b7b7ec;
+  background-color:#2e4789 ;
   color: rgb(255, 255, 255);
-  border: 3px solid #2e4789;
+  border: 3px solid #f0b7b7ec;
   border-radius: 5px;
   font-family: "Lucida Console", Courier, monospace;
   font-style: italic;

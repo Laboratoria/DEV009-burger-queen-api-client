@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import EditDeleteButtons from "../Button-staff/Button-staff";
-
+import "./staff.css"
 
 interface User {
     email: string;
