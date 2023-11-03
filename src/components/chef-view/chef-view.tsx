@@ -55,7 +55,7 @@ const ChefView: React.FC = () => {
       const response = await fetch(`http://localhost:8080/orders/${orderId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',  // Corrección aquí
           authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
         body: JSON.stringify({ status, dateProcessed }),
@@ -68,6 +68,8 @@ const ChefView: React.FC = () => {
       console.error('Error updating order status:', error);
     }
   };
+
+
 
   const handleBackClick = () => {
     navigate('/');
@@ -101,14 +103,7 @@ const ChefView: React.FC = () => {
         const initialOrderStates: { [key: number]: string } = {};
         data.forEach((order: any) => {
           const savedState = localStorage.getItem(`orderState_${order.id}`);
-          initialOrderStates[order.id] = savedState || 'inProgress';
-
-          // Verifica si la fecha de entrada está presente y es válida
-          if (order.dateEntry) {
-            const entryDate = new Date(order.dateEntry);
-            // Guarda la fecha de entrada en el estado local
-            localStorage.setItem(`entryDate_${order.id}`, entryDate.toString());
-          }
+          initialOrderStates[order.id] = savedState || 'inProgress'; // Asegúrate de usar 'inProgress' aquí
         });
         setOrderStates(initialOrderStates);
         setOrders(data);
@@ -120,13 +115,14 @@ const ChefView: React.FC = () => {
     peticionGet();
   }, []);
 
+
   const calculateTimeTaken = (order: Orders) => {
     if (order.dateProcessed && order.dateEntry) {
       const dateProcessed = new Date(order.dateProcessed);
-      const entryDate = new Date(localStorage.getItem(`entryDate_${order.id}`));
+      const dateEntry = new Date(order.dateEntry);
 
       // Convertimos las fechas a milisegundos
-      const timeDifferenceInMilliseconds = dateProcessed.getTime() - entryDate.getTime();
+      const timeDifferenceInMilliseconds = dateProcessed.getTime() - dateEntry.getTime();
 
       // Convierte el tiempo en milisegundos a minutos
       const timeInMinutes = timeDifferenceInMilliseconds / (1000 * 60);
@@ -141,6 +137,7 @@ const ChefView: React.FC = () => {
     }
     return 'N/A';
   };
+
 
   return (
     <div>
