@@ -23,8 +23,24 @@
   }
 
   .delivered-button {
-    background-color: green; /* Cambia el color de fondo a verde cuando se entrega */
-    color: white; /* Cambia el color del texto a blanco para mayor contraste */
-    /* Otros estilos que desees aplicar cuando se entregue la orden */
+    background-color: #FDA8AD; 
+    color: white; 
+  
   }
   
+  .orderproductwaiter {
+    margin-top: 2rem;
+    border: 2px solid #FDA8AD !important;
+    border-collapse: collapse !important;
+}
+
+.table.orderProductWaiter thead th:first-child,
+.table.orderProductWaiter thead th:nth-child(2),
+.table.orderProductWaiter thead th:nth-child(3),
+.table.orderProductWaiter thead th:nth-child(4),
+.table.orderProductWaiter thead th:nth-child(5),
+.table.orderProductWaiter thead th:nth-child(6),
+.table.orderProductWaiter thead th:nth-child(7) {
+  color: #00578D;
+}
+

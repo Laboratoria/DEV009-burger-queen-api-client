@@ -22,7 +22,7 @@ const WaiterView = () => {
           onBackClick={() => { }}
           showBackButton={false}
           onLogoutClick={handleLogoutClick} administratorName={""} cookName={""} />
-        <div>
+        <div className="BlueBox">
           <MainMenuButtons />
         </div>
       </div>

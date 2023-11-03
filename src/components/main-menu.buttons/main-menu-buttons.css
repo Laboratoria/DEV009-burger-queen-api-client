@@ -1,5 +1,6 @@
 .waiter-view {
   background-color: #00578D; 
+  height: 46em;
 }
 
 .main-menu-buttons-container {
@@ -7,21 +8,24 @@
   justify-content: space-around;
   align-items: center;
   border: 4px solid #FDA8AD;
-  margin-top: 1em;
-  margin-left: 1em;
-  margin-right: 1em;
-  height: 39em;
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  height: 36em;
   background-color: #fff;
-  padding: 5px
+  padding: 5px;
 }
 
 .menu-button, .order-ready-button {
   border: none;
-  font-style: italic;
   font-family: "Lucida Console", Courier, monospace;
-  font-weight: bolder;
+    font-style: italic;
+    font-weight: bold;
 }
 
+.menu-button, .order-ready-button, h1{
+  text-decoration: none;
+}
 
 .menu-button {
   border: 5px solid #FDA8AD;
@@ -33,7 +37,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .order-ready-button {
@@ -47,3 +50,17 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+  .main-menu-buttons-container {
+    flex-direction: column;
+    height: auto;
+    margin-bottom: 20em; /* Agrega espacio en la parte inferior */
+  }
+
+  .menu-button, .order-ready-button {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}
+
