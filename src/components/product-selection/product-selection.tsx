@@ -24,7 +24,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onProductSelect }
 
   return (
     <div>
-      <table className="table custom-table">
+      <table className="table custom-table " >
         <thead>
           {/* Encabezados de la tabla */}
         </thead>

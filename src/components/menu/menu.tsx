@@ -126,14 +126,13 @@ const Menu = () => {
               Lunch
             </button>
           </div>
-          <div className="productsSelection">
+          <div className="productsSelection ">
             <ProductTable
               products={products?.filter((product) => product.type === selectedProductType)}
               onProductSelect={handleProductSelect}
             />
           </div>
-          <div>
-            Creating order:
+          <div className="orderform">
             <OrderForm
               id={id}
               client={client}
