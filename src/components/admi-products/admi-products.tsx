@@ -34,9 +34,7 @@ const MenuAdmi = () => {
           showBackButton={true}
         />
         <div className="admi-view-product">
-          <ProductTableAdmi onAddProductAdmi={function (): void {
-            throw new Error("Function not implemented.");
-          } }        />
+          <ProductTableAdmi />
         </div>
       </div>
     </div>

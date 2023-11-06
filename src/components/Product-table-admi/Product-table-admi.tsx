@@ -84,9 +84,15 @@ const ProductTableAdmi: React.FC = () => {
             'Content-Type': 'application/json',
             authorization: 'Bearer ' + localStorage.getItem('accessToken'),
           },
-          body: JSON.stringify(editedProduct),
+          body: JSON.stringify({
+            id: editedProduct.id,
+            name: editedProduct.name,
+            type: editedProduct.type,
+            price: editedProduct.price,
+            image: editedProduct.image,
+          }),
         });
-
+  
         if (response.ok) {
           setProductsAdmi((prevProducts) =>
             prevProducts.map((product) =>
@@ -103,6 +109,7 @@ const ProductTableAdmi: React.FC = () => {
       }
     }
   };
+  
 
   const handleRemoveProduct = (id: number) => {
     try {
