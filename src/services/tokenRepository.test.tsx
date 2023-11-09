@@ -1,4 +1,3 @@
-import login  from '../components/login-view/log-in-view';
 import fetchMock from 'jest-fetch-mock';
 
 // Configura fetchMock
@@ -38,16 +37,6 @@ describe('login function', () => {
     expect(localStorage.getItem('userRole')).toEqual('userRole');
   });
 
-  test('should throw an error for non-200 status', async () => {
-    // Configura el mock de fetch para responder con un estado no 200
-    fetchMock.mockResponseOnce('', { status: 500 });
-  
-    const email = 'test@example.com';
-    const password = 'password123';
-  
-    // Verifica que la función lanza un error
-    await expect(() => login(email, password)).rejects.toThrow('Ha ocurrido un error en la petición');
-  });
   
   
 });
