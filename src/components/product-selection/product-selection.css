@@ -1,0 +1,64 @@
+.custom-table {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 5px solid #FFA9AA;
+    color: #FFA9AA;
+    font-family: "Lucida Console", Courier, monospace;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 4em;
+    width: 20em;
+}
+
+.custom-table th,
+.custom-table td {
+    background-color: #00578D;
+    color: #FFA9AA;
+    border: 2px solid #FFA9AA;
+    padding: 5px; /* Añade espacio interno */
+    font-size: 12px; /* Ajusta el tamaño del texto */
+}
+
+.custom-table th {
+    background-color: #00578D;
+    color: #FFA9AA;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.product-image {
+    max-width: 60px;
+    max-height: 40px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+}
+
+.check-icon {
+    color:#fdfdfd;
+    font-size: 25px;
+    font-weight: bolder;
+    background-color:#FFA9AA;
+}
+
+.select-button {
+    background-color:#FFA9AA;
+    border: solid #FFA9AA;
+}
+
+/* Media Queries para tablet */
+@media (max-width: 768px) {
+    .custom-table {
+        width: 100%;
+        margin-top: 2em;
+    }
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 576px) {
+    .custom-table {
+        margin-top: 1em;
+    }
+}
+
+

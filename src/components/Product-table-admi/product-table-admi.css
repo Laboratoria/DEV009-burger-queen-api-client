@@ -1,0 +1,84 @@
+.staff-view {
+    max-height: 90px;
+    overflow-y: auto;
+    border: 2px solid #00578D;
+    background-color: #fff;
+    margin-top: 1em;
+    padding: 5px;
+}
+
+.staff-view table {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 0.5em;
+    margin-bottom: auto;
+    table-layout: fixed;
+    border: 2px solid #00578D;
+    background-color: #fff;
+}
+
+.staff-view th,
+.staff-view td {
+    border: 2px solid #00578D;
+    padding: 8px;
+    text-align: center;
+    background-color: #fff;
+    color: #ec8b92;
+    font-family: 'Lucida Console', Courier, monospace;
+}
+
+.staff-view th {
+    background-color: #FDA8AD;
+    color: white;
+}
+
+.ButtonAddProduct {
+    background-color: #00578D;
+    border: 2px solid #00578D;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-top: 1em;
+}
+
+.edit-button {
+    background-color: #FDA8AD;
+    border: 2px solid #00578D;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-top: 1em;
+}
+
+.delete-button {
+    background-color: #FDA8AD;
+    border: 2px solid #00578D;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-top: 1em;
+}
+
+.staff-view h5 {
+    color: #00578D;
+}
+
+/* Media Query para pantallas de tamaño máximo de 768px */
+@media (max-width: 768px) {
+    .staff-view table {
+        width: 100%;
+    }
+
+    .staff-view button {
+        font-size: 14px;
+    }
+
+    .staff-view button.edit-button {
+        margin-right: 10px;
+    }
+}
